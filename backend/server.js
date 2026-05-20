@@ -3,6 +3,25 @@ const path = require('path');
 const express = require('express');
 const cors = require('cors');
 
+const envPath = path.join(__dirname, '..', '.env');
+if (fs.existsSync(envPath)) {
+  fs.readFileSync(envPath, 'utf8')
+    .split(/\r?\n/)
+    .filter((line) => line.trim() && !line.trim().startsWith('#'))
+    .forEach((line) => {
+      const separatorIndex = line.indexOf('=');
+      if (separatorIndex === -1) {
+        return;
+      }
+
+      const key = line.slice(0, separatorIndex).trim();
+      const value = line.slice(separatorIndex + 1).trim().replace(/^["']|["']$/g, '');
+      if (key && process.env[key] === undefined) {
+        process.env[key] = value;
+      }
+    });
+}
+
 const app = express();
 const port = process.env.PORT || 3000;
 const csvPath = path.join(__dirname, '..', 'data', 'barrios_barranquilla.csv');
@@ -54,7 +73,10 @@ function buildEvents(rows) {
 
 app.post('/api/login', (req, res) => {
   const { email, password } = req.body;
-  if (email === 'demo@joulex.co' && password === 'demo123') {
+  const demoEmail = process.env.DEMO_EMAIL || 'demo@joulex.co';
+  const demoPassword = process.env.DEMO_PASSWORD || 'demo123';
+
+  if (email === demoEmail && password === demoPassword) {
     return res.json({
       token: 'demo-token-joulex',
       user: {
