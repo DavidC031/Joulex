@@ -203,6 +203,14 @@ if (fs.existsSync(distPath)) {
   app.get('*', (_req, res) => {
     res.sendFile(path.join(distPath, 'index.html'));
   });
+} else {
+  app.get('/', (_req, res) => {
+    res.status(503).send(`
+      <h1>JouleX backend activo</h1>
+      <p>La API esta disponible, pero el build Angular no existe en <code>dist/joulex-monitor-electrico-bq/browser</code>.</p>
+      <p>Ejecuta <code>npm run build</code> durante el despliegue de Azure.</p>
+    `);
+  });
 }
 
 app.listen(port, () => {

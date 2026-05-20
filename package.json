@@ -7,11 +7,12 @@
     "dev": "concurrently \"npm run api\" \"npm run web\"",
     "web": "ng serve --host 0.0.0.0 --port 4200",
     "api": "node backend/server.js",
-    "build": "ng build",
+    "build": "ng build --configuration production --delete-output-path=false",
+    "azure-postbuild": "npm run build",
     "check": "node --check backend/server.js"
   },
   "engines": {
-    "node": "20.x"
+    "node": ">=20 <23"
   },
   "dependencies": {
     "@angular/animations": "^18.2.13",
