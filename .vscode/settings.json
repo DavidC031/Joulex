@@ -1,0 +1,12 @@
+{
+  "appService.zipIgnorePattern": [
+    "node_modules{,/**}",
+    ".angular{,/**}",
+    ".git{,/**}",
+    "backend.log",
+    "frontend.log",
+    "*.log",
+    ".env",
+    "dist{,/**}"
+  ]
+}
