@@ -1,0 +1,411 @@
+<!DOCTYPE html><html lang="es" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>JouleX Dashboard - MonitorEléctrico BQ</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed-variant": "#703718",
+                        "outline": "#747780",
+                        "surface-tint": "#415f8f",
+                        "surface-container": "#edeeef",
+                        "on-secondary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "secondary-fixed": "#d5e3ff",
+                        "on-primary-fixed": "#001b3d",
+                        "tertiary-fixed-dim": "#ffb692",
+                        "on-surface-variant": "#43474f",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-container": "#00427d",
+                        "tertiary-container": "#491a00",
+                        "primary-fixed": "#d6e3ff",
+                        "background": "#f8f9fa",
+                        "on-primary-container": "#7490c3",
+                        "tertiary": "#280b00",
+                        "surface-dim": "#d9dadb",
+                        "primary-container": "#002855",
+                        "inverse-surface": "#2e3132",
+                        "on-surface": "#191c1d",
+                        "surface-container-highest": "#e1e3e4",
+                        "primary": "#001430",
+                        "surface-variant": "#e1e3e4",
+                        "on-primary": "#ffffff",
+                        "secondary-container": "#79b0ff",
+                        "on-background": "#191c1d",
+                        "inverse-primary": "#aac7fd",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed": "#341100",
+                        "surface-bright": "#f8f9fa",
+                        "secondary": "#1c5fa8",
+                        "on-tertiary-container": "#c77e59",
+                        "on-secondary-fixed-variant": "#004787",
+                        "on-primary-fixed-variant": "#284775",
+                        "surface-container-high": "#e7e8e9",
+                        "on-secondary-fixed": "#001c3b",
+                        "surface-container-low": "#f3f4f5",
+                        "error-container": "#ffdad6",
+                        "outline-variant": "#c4c6d0",
+                        "tertiary-fixed": "#ffdbcb",
+                        "on-error-container": "#93000a",
+                        "inverse-on-surface": "#f0f1f2",
+                        "primary-fixed-dim": "#aac7fd",
+                        "surface": "#f8f9fa",
+                        "secondary-fixed-dim": "#a6c8ff",
+                        "on-tertiary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "sm": "12px",
+                        "lg": "48px",
+                        "margin-mobile": "16px",
+                        "gutter": "16px",
+                        "md": "24px",
+                        "base": "8px",
+                        "xs": "4px",
+                        "margin-desktop": "32px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "data-mono": ["JetBrains Mono"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "data-mono": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col md:flex-row overflow-x-hidden">
+<!-- Sidebar Navigation -->
+<aside class="hidden md:flex flex-col h-screen w-64 border-r border-outline-variant bg-surface-container-low shrink-0 z-20 sticky top-0">
+<div class="p-base flex flex-col h-full gap-xs overflow-y-auto">
+<!-- Header del Sector -->
+<div class="px-gutter py-md mb-xs flex items-center gap-sm">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-secondary-container" data-icon="explore">explore</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm font-bold text-primary truncate">Sur de BQ</h2>
+<p class="font-label-caps text-label-caps text-on-surface-variant truncate">Sector de Monitoreo</p>
+</div>
+</div>
+<!-- Enlaces de Navegación por Barrios -->
+<nav class="flex-1 flex flex-col gap-xs px-xs">
+<a class="flex items-center gap-sm px-sm py-sm rounded-xl font-bold bg-secondary-container text-on-secondary-container group" href="#">
+<span class="material-symbols-outlined" data-icon="location_on">location_on</span>
+<span class="font-body-sm text-body-sm">Rebolo</span>
+</a>
+<a class="flex items-center gap-sm px-sm py-sm rounded-xl text-on-surface-variant hover:bg-surface-variant transition-all group" href="#">
+<span class="material-symbols-outlined" data-icon="location_on">location_on</span>
+<span class="font-body-sm text-body-sm">La Chinita</span>
+</a>
+<a class="flex items-center gap-sm px-sm py-sm rounded-xl text-on-surface-variant hover:bg-surface-variant transition-all group" href="#">
+<span class="material-symbols-outlined" data-icon="location_on">location_on</span>
+<span class="font-body-sm text-body-sm">Chiquínquira</span>
+</a>
+<a class="flex items-center gap-sm px-sm py-sm rounded-xl text-on-surface-variant hover:bg-surface-variant transition-all group" href="#">
+<span class="material-symbols-outlined" data-icon="location_on">location_on</span>
+<span class="font-body-sm text-body-sm">San Roque</span>
+</a>
+<a class="flex items-center gap-sm px-sm py-sm rounded-xl text-on-surface-variant hover:bg-surface-variant transition-all group" href="#">
+<span class="material-symbols-outlined" data-icon="location_on">location_on</span>
+<span class="font-body-sm text-body-sm">Simón Bolívar</span>
+</a>
+</nav>
+<!-- CTA -->
+<div class="px-sm py-md">
+<button class="w-full py-sm px-gutter bg-transparent border border-outline text-primary font-body-sm text-body-sm rounded hover:bg-surface-variant transition-colors flex items-center justify-center gap-xs">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+                Nueva Zona
+            </button>
+</div>
+<!-- Footer de Sidebar -->
+<div class="mt-auto flex flex-col gap-xs px-xs pb-sm border-t border-outline-variant pt-sm">
+<a class="flex items-center gap-sm px-sm py-xs rounded-xl text-on-surface-variant hover:bg-surface-variant transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="settings_suggest">settings_suggest</span>
+<span class="font-body-sm text-body-sm">Salud del Sistema</span>
+</a>
+<a class="flex items-center gap-sm px-sm py-xs rounded-xl text-on-surface-variant hover:bg-surface-variant transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+<span class="font-body-sm text-body-sm">Soporte</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden bg-background">
+<!-- Top Bar -->
+<header class="bg-surface-container-lowest flex justify-between items-center px-margin-desktop w-full h-16 border-b border-outline-variant shrink-0 z-10 sticky top-0">
+<div class="flex items-center gap-sm">
+<img alt="MonitorEléctrico BQ Logo" class="h-8 w-8 object-contain" src="https://lh3.googleusercontent.com/aida/ADBb0uhfMhzNHUqlqv6qyWpTi1_zZcmW4bz1GW-WRGgOcz2RyhFq3-YcWhEObyBW7colTZ8kIRpb90j9zsUkY1tMqQVt3izvFlqAO0V7XWNeV0CXlRhKP_qAHrTgLWa-y_fxzz4IOe5TcLCOtkPQO6-T_mgDM5vl32T-VKeXqGkKQQxA2_WnO5-9B9IcGYqDIrz6If2KF9g1v4z0XDfsQNi7bAtxdiR8y94J_O1d_GH-kXIX3idNNj5HJDK2Qxw">
+<h1 class="font-headline-md text-headline-md font-bold text-primary hidden sm:block">JouleX</h1>
+</div>
+<!-- Desktop Nav -->
+<nav class="hidden lg:flex items-center gap-md h-full">
+<a class="text-secondary font-bold border-b-2 border-secondary pb-1 h-full flex items-center hover:text-secondary transition-colors cursor-pointer" href="#">
+<span class="font-body-sm text-body-sm">Plataforma</span>
+</a>
+<a class="text-on-surface-variant h-full flex items-center hover:text-secondary transition-colors cursor-pointer" href="#">
+<span class="font-body-sm text-body-sm">Analítica</span>
+</a>
+<a class="text-on-surface-variant h-full flex items-center hover:text-secondary transition-colors cursor-pointer" href="#">
+<span class="font-body-sm text-body-sm">Reportes</span>
+</a>
+<a class="text-on-surface-variant h-full flex items-center hover:text-secondary transition-colors cursor-pointer" href="#">
+<span class="font-body-sm text-body-sm">Configuración</span>
+</a>
+</nav>
+<div class="flex items-center gap-sm">
+<button class="p-xs text-on-surface-variant hover:text-secondary transition-colors">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+<button class="p-xs text-on-surface-variant hover:text-secondary transition-colors relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="p-xs text-on-surface-variant hover:text-secondary transition-colors">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Scrollable Area -->
+<div class="flex-1 overflow-y-auto p-margin-mobile md:p-margin-desktop">
+<div class="max-w-7xl mx-auto space-y-md md:space-y-lg">
+<!-- Contextual Page Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-sm mb-lg">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-background flex items-center gap-sm">
+<span class="material-symbols-outlined text-secondary" style="font-size: 32px;">analytics</span>
+<span class="">Rebolo <span class="font-body-lg text-body-lg text-outline ml-xs font-normal">| Datos del Sector</span></span>
+</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-xs">Monitoreo de datos en tiempo real y análisis técnico de la zona designada.</p>
+</div>
+<div class="flex items-center gap-sm text-on-surface-variant font-data-mono text-data-mono bg-surface-container-low px-sm py-xs rounded-full border border-outline-variant">
+<span class="material-symbols-outlined text-secondary animate-spin" style="font-size: 18px;">sync</span>
+<span class="">Actualizado: Ahora</span>
+</div>
+</div>
+<!-- Bento Grid - 3 Column Layout from SCREEN_2 with SCREEN_6 Style -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter md:gap-md">
+<!-- Efecto Joule -->
+<div class="bg-surface-container-lowest rounded-3xl p-md border border-outline-variant flex flex-col justify-between shadow-sm hover:shadow-md hover:scale-[1.02] hover:border-secondary transition-all duration-300">
+<div class="flex justify-between items-start mb-md">
+<div>
+<h3 class="font-label-caps text-label-caps text-on-surface-variant tracking-wider uppercase">Efecto Joule</h3>
+<p class="font-body-sm text-body-sm text-outline mt-1">Pérdida Térmica Eq.</p>
+</div>
+<span class="material-symbols-outlined text-secondary" data-icon="thermostat">thermostat</span>
+</div>
+<div>
+<div class="flex items-baseline gap-xs">
+<span class="font-display-lg text-display-lg text-on-background">24.5</span>
+<span class="font-data-mono text-data-mono text-outline">kW/h</span>
+</div>
+<div class="mt-sm flex items-center gap-xs">
+<div class="h-1 flex-1 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-3/4"></div>
+</div>
+<span class="font-data-mono text-data-mono text-secondary text-xs">75%</span>
+</div>
+</div>
+</div>
+<!-- Campo Eléctrico -->
+<div class="bg-surface-container-lowest rounded-3xl p-md border border-outline-variant flex flex-col justify-between shadow-sm hover:shadow-md hover:scale-[1.02] hover:border-secondary transition-all duration-300">
+<div class="flex justify-between items-start mb-md">
+<div>
+<h3 class="font-label-caps text-label-caps text-on-surface-variant tracking-wider uppercase">Campo Eléctrico</h3>
+<p class="font-body-sm text-body-sm text-outline mt-1">Intensidad Local</p>
+</div>
+<span class="material-symbols-outlined text-secondary" data-icon="electric_bolt">electric_bolt</span>
+</div>
+<div>
+<div class="flex items-baseline gap-xs">
+<span class="font-display-lg text-display-lg text-on-background">1.2</span>
+<span class="font-data-mono text-data-mono text-outline">kV/m</span>
+</div>
+<div class="mt-sm flex items-center gap-xs">
+<div class="h-1 flex-1 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-green-500 w-1/4"></div>
+</div>
+<span class="font-data-mono text-data-mono text-green-600 text-xs">Estable</span>
+</div>
+</div>
+</div>
+<!-- Reserva Energética -->
+<div class="bg-surface-container-lowest rounded-3xl p-md border border-outline-variant flex flex-col justify-between shadow-sm hover:shadow-md hover:scale-[1.02] hover:border-secondary transition-all duration-300">
+<div class="flex justify-between items-start mb-md">
+<div>
+<h3 class="font-label-caps text-label-caps text-on-surface-variant tracking-wider uppercase">Reserva Energética</h3>
+<p class="font-body-sm text-body-sm text-outline mt-1">Bancos de Capacitores</p>
+</div>
+<span class="material-symbols-outlined text-secondary" data-icon="battery_charging_full">battery_charging_full</span>
+</div>
+<div>
+<div class="flex items-baseline gap-xs">
+<span class="font-display-lg text-display-lg text-on-background">98</span>
+<span class="font-data-mono text-data-mono text-outline">%</span>
+</div>
+<div class="mt-sm flex items-center gap-xs">
+<div class="h-1 flex-1 bg-surface-variant rounded-full overflow-hidden flex">
+<div class="h-full bg-secondary w-full"></div>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Óptimo</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Resumen Técnico de Cálculos (Modernized Table) -->
+<div class="bg-surface-container-lowest rounded-3xl border border-outline-variant shadow-sm overflow-hidden">
+<div class="px-md py-sm border-b border-outline-variant flex justify-between items-center bg-surface-container-low/30">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary" data-icon="table_chart">table_chart</span>
+<h3 class="font-headline-sm text-headline-sm font-semibold text-on-background">Resumen Técnico de Cálculos</h3>
+</div>
+<button class="text-secondary font-body-sm text-body-sm font-medium hover:underline flex items-center gap-xs">
+                        Ver Todos <span class="material-symbols-outlined" style="font-size: 16px;">open_in_new</span>
+</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-outline-variant text-on-surface-variant font-label-caps text-label-caps uppercase tracking-wider bg-surface-container-low/50">
+<th class="px-md py-sm font-bold">ID del Nodo</th>
+<th class="px-md py-sm font-bold">Ubicación</th>
+<th class="px-md py-sm font-bold">Estado Normativo</th>
+<th class="px-md py-sm font-bold text-right">Varianza (Δ)</th>
+</tr>
+</thead>
+<tbody class="font-body-sm text-body-sm divide-y divide-outline-variant/50">
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-md py-sm font-data-mono text-data-mono text-on-background">ND-A1</td>
+<td class="px-md py-sm text-on-surface-variant">Subestación Alfa</td>
+<td class="px-md py-sm">
+<span class="inline-flex items-center gap-xs px-2.5 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800 border border-green-200">
+<span class="material-symbols-outlined" style="font-size: 14px;">check_circle</span>
+                                        Seguro
+                                    </span>
+</td>
+<td class="px-md py-sm text-right font-data-mono text-data-mono text-on-background">+0.02</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors bg-surface-bright">
+<td class="px-md py-sm font-data-mono text-data-mono text-on-background">ND-B2</td>
+<td class="px-md py-sm text-on-surface-variant">Punto Distribución B</td>
+<td class="px-md py-sm">
+<span class="inline-flex items-center gap-xs px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-800 border border-amber-200">
+<span class="material-symbols-outlined" style="font-size: 14px;">warning</span>
+                                        Advertencia
+                                    </span>
+</td>
+<td class="px-md py-sm text-right font-data-mono text-data-mono text-on-background">-0.05</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-md py-sm font-data-mono text-data-mono text-on-background">ND-C3</td>
+<td class="px-md py-sm text-on-surface-variant">Banco Transformadores C</td>
+<td class="px-md py-sm">
+<span class="inline-flex items-center gap-xs px-2.5 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-800 border border-red-200">
+<span class="material-symbols-outlined" style="font-size: 14px;">error</span>
+                                        Infracción RETIE
+                                    </span>
+</td>
+<td class="px-md py-sm text-right font-data-mono text-data-mono text-error font-semibold">+1.45</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<footer class="max-w-7xl mx-auto pt-lg pb-md border-t border-outline-variant mt-lg">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-md mb-md">
+    <!-- Support Column -->
+    <div class="space-y-sm">
+      <h4 class="font-label-caps text-label-caps text-primary uppercase tracking-wider">Servicio al Cliente</h4>
+      <div class="flex flex-col gap-xs">
+        <a href="tel:+576051234567" class="flex items-center gap-xs text-on-surface-variant hover:text-secondary transition-colors font-body-sm text-body-sm">
+          <span class="material-symbols-outlined text-[18px]">phone</span>
+          +57 605 123 4567
+        </a>
+        <a href="mailto:soporte@joulex.co" class="flex items-center gap-xs text-on-surface-variant hover:text-secondary transition-colors font-body-sm text-body-sm">
+          <span class="material-symbols-outlined text-[18px]">mail</span>
+          soporte@joulex.co
+        </a>
+      </div>
+    </div>
+
+    <!-- Social Column -->
+    <div class="space-y-sm">
+      <h4 class="font-label-caps text-label-caps text-primary uppercase tracking-wider">Redes Sociales</h4>
+      <div class="flex gap-md">
+        <a href="#" class="flex items-center gap-xs text-on-surface-variant hover:text-secondary transition-colors font-body-sm text-body-sm">
+          <span class="material-symbols-outlined text-[18px]">link</span>
+          LinkedIn
+        </a>
+        <a href="#" class="flex items-center gap-xs text-on-surface-variant hover:text-secondary transition-colors font-body-sm text-body-sm">
+          <span class="material-symbols-outlined text-[18px]">close</span>
+          Twitter/X
+        </a>
+        <a href="#" class="flex items-center gap-xs text-on-surface-variant hover:text-secondary transition-colors font-body-sm text-body-sm">
+          <span class="material-symbols-outlined text-[18px]">photo_camera</span>
+          Instagram
+        </a>
+      </div>
+    </div>
+
+    <!-- Institutional Info -->
+    <div class="lg:text-right flex flex-col justify-end">
+      <p class="font-label-caps text-label-caps text-on-surface-variant">
+        Certificación RETIE 2023 | ISO 9001
+      </p>
+    </div>
+  </div>
+
+  <!-- Bottom Line -->
+  <div class="pt-md border-t border-outline-variant/30 flex flex-col md:flex-row justify-between gap-sm items-center">
+    <p class="font-body-sm text-body-sm text-on-surface-variant opacity-80">
+      © 2023 JouleX - MonitorEléctrico BQ. Todos los derechos reservados.
+    </p>
+    <div class="flex gap-md font-body-sm text-body-sm text-on-surface-variant">
+      <a href="#" class="hover:underline">Términos y Condiciones</a>
+      <a href="#" class="hover:underline">Política de Privacidad</a>
+    </div>
+  </div>
+</footer></div>
+</div>
+</main>
+
+
+
+
+
+
+</body></html>

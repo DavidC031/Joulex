@@ -1,0 +1,54 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', Arial, sans-serif;
+  color: #191c1d;
+  background: #f8f9fa;
+}
+
+button,
+input {
+  font-family: inherit;
+}
+
+.p-card {
+  border-radius: 8px;
+  box-shadow: none;
+}
+
+.p-card .p-card-body {
+  padding: 18px;
+}
+
+.p-card .p-card-content {
+  padding: 0;
+}
+
+.metric-card .p-card-body {
+  height: 100%;
+  padding: 16px 18px;
+}
+
+.metric-card .p-card-content {
+  display: grid;
+  gap: 0;
+}
+
+.p-button {
+  border-radius: 6px;
+  font-weight: 700;
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+  background: #002855;
+  color: #ffffff;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.p-datatable .p-datatable-tbody > tr:nth-child(even) {
+  background: #f3f4f5;
+}

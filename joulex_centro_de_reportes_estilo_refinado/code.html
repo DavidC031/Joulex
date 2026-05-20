@@ -1,0 +1,502 @@
+<!DOCTYPE html><html class="light" lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>JouleX - Centro de Reportes</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-variant": "#e1e3e4",
+                    "on-secondary-fixed": "#001c3b",
+                    "on-error-container": "#93000a",
+                    "on-primary": "#ffffff",
+                    "on-surface": "#191c1d",
+                    "secondary-fixed-dim": "#a6c8ff",
+                    "on-secondary-fixed-variant": "#004787",
+                    "inverse-primary": "#aac7fd",
+                    "inverse-on-surface": "#f0f1f2",
+                    "secondary": "#1c5fa8",
+                    "on-tertiary-fixed": "#341100",
+                    "error": "#ba1a1a",
+                    "tertiary": "#280b00",
+                    "on-tertiary-fixed-variant": "#703718",
+                    "on-primary-fixed-variant": "#284775",
+                    "surface-tint": "#415f8f",
+                    "background": "#f8f9fa",
+                    "primary": "#001430",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-high": "#e7e8e9",
+                    "on-error": "#ffffff",
+                    "surface-container-highest": "#e1e3e4",
+                    "secondary-fixed": "#d5e3ff",
+                    "on-surface-variant": "#43474f",
+                    "inverse-surface": "#2e3132",
+                    "surface-container-lowest": "#ffffff",
+                    "outline": "#747780",
+                    "primary-fixed-dim": "#aac7fd",
+                    "primary-container": "#002855",
+                    "tertiary-fixed-dim": "#ffb692",
+                    "outline-variant": "#c4c6d0",
+                    "on-secondary": "#ffffff",
+                    "on-primary-container": "#7490c3",
+                    "tertiary-container": "#491a00",
+                    "on-background": "#191c1d",
+                    "surface-dim": "#d9dadb",
+                    "on-tertiary-container": "#c77e59",
+                    "surface-container": "#edeeef",
+                    "surface-container-low": "#f3f4f5",
+                    "surface": "#f8f9fa",
+                    "on-primary-fixed": "#001b3d",
+                    "surface-bright": "#f8f9fa",
+                    "primary-fixed": "#d6e3ff",
+                    "error-container": "#ffdad6",
+                    "tertiary-fixed": "#ffdbcb",
+                    "on-secondary-container": "#00427d",
+                    "secondary-container": "#79b0ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "xs": "4px",
+                    "margin-mobile": "16px",
+                    "base": "8px",
+                    "lg": "48px",
+                    "margin-desktop": "32px",
+                    "sm": "12px",
+                    "md": "24px",
+                    "gutter": "16px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-caps": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "body-md": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "data-mono": ["JetBrains Mono"],
+                    "body-sm": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "data-mono": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { background-color: #f8f9fa; font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .active-icon { font-variation-settings: 'FILL' 1; }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden text-on-surface">
+<!-- SideNavBar Component - Updated to match SCREEN_10 style -->
+<aside class="hidden md:flex flex-col h-full w-64 bg-surface-container-low border-r border-outline-variant shrink-0 z-20 sticky top-0">
+<div class="p-base flex flex-col h-full gap-xs overflow-y-auto">
+<!-- Header del Sector -->
+<div class="px-gutter py-md mb-xs flex items-center gap-sm">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-on-secondary-container">explore</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm font-bold text-primary truncate">Sur de BQ</h2>
+<p class="font-label-caps text-label-caps text-on-surface-variant truncate">Sector de Monitoreo</p>
+</div>
+</div>
+<!-- Enlaces de Navegación por Barrios -->
+<nav class="flex-1 flex flex-col gap-xs px-xs">
+<a class="flex items-center gap-sm px-sm py-sm rounded-xl text-on-surface-variant hover:bg-surface-variant transition-all group" href="#">
+<span class="material-symbols-outlined">location_on</span>
+<span class="font-body-sm text-body-sm">Rebolo</span>
+</a>
+<a class="flex items-center gap-sm px-sm py-sm rounded-xl text-on-surface-variant hover:bg-surface-variant transition-all group" href="#">
+<span class="material-symbols-outlined">location_on</span>
+<span class="font-body-sm text-body-sm">La Chinita</span>
+</a>
+<a class="flex items-center gap-sm px-sm py-sm rounded-xl text-on-surface-variant hover:bg-surface-variant transition-all group" href="#">
+<span class="material-symbols-outlined">location_on</span>
+<span class="font-body-sm text-body-sm">Chiquinquirá</span>
+</a>
+<a class="flex items-center gap-sm px-sm py-sm rounded-xl text-on-surface-variant hover:bg-surface-variant transition-all group" href="#">
+<span class="material-symbols-outlined">location_on</span>
+<span class="font-body-sm text-body-sm">San Roque</span>
+</a>
+<a class="flex items-center gap-sm px-sm py-sm rounded-xl text-on-surface-variant hover:bg-surface-variant transition-all group" href="#">
+<span class="material-symbols-outlined">location_on</span>
+<span class="font-body-sm text-body-sm">Simón Bolívar</span>
+</a>
+</nav>
+<!-- CTA -->
+<div class="px-sm py-md">
+<button class="w-full py-sm px-gutter bg-transparent border border-outline text-primary font-body-sm text-body-sm rounded hover:bg-surface-variant transition-colors flex items-center justify-center gap-xs">
+<span class="material-symbols-outlined">add</span>
+                Nueva Zona
+            </button>
+</div>
+<!-- Footer de Sidebar -->
+<div class="mt-auto flex flex-col gap-xs px-xs pb-sm border-t border-outline-variant pt-sm">
+<a class="flex items-center gap-sm px-sm py-xs rounded-xl text-on-surface-variant hover:bg-surface-variant transition-all" href="#">
+<span class="material-symbols-outlined">settings_suggest</span>
+<span class="font-body-sm text-body-sm">Salud del Sistema</span>
+</a>
+<a class="flex items-center gap-sm px-sm py-xs rounded-xl text-on-surface-variant hover:bg-surface-variant transition-all" href="#">
+<span class="material-symbols-outlined">help_outline</span>
+<span class="font-body-sm text-body-sm">Soporte</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Canvas Area -->
+<div class="flex-1 flex flex-col h-full overflow-hidden">
+<!-- TopNavBar Component - Updated to match SCREEN_10 style -->
+<header class="bg-surface-container-lowest flex justify-between items-center px-margin-desktop w-full h-16 border-b border-outline-variant shrink-0 z-10 sticky top-0">
+<div class="flex items-center gap-sm">
+<img alt="JouleX Logo" class="h-8 w-8 object-contain" src="https://lh3.googleusercontent.com/aida/ADBb0uhfMhzNHUqlqv6qyWpTi1_zZcmW4bz1GW-WRGgOcz2RyhFq3-YcWhEObyBW7colTZ8kIRpb90j9zsUkY1tMqQVt3izvFlqAO0V7XWNeV0CXlRhKP_qAHrTgLWa-y_fxzz4IOe5TcLCOtkPQO6-T_mgDM5vl32T-VKeXqGkKQQxA2_WnO5-9B9IcGYqDIrz6If2KF9g1v4z0XDfsQNi7bAtxdiR8y94J_O1d_GH-kXIX3idNNj5HJDK2Qxw">
+<h1 class="font-headline-md text-headline-md font-bold text-primary hidden sm:block">JouleX</h1>
+</div>
+<!-- Desktop Nav -->
+<nav class="hidden lg:flex items-center gap-md h-full">
+<a class="text-on-surface-variant h-full flex items-center hover:text-secondary transition-colors cursor-pointer" href="#">
+<span class="font-body-sm text-body-sm">Plataforma</span>
+</a>
+<a class="text-on-surface-variant h-full flex items-center hover:text-secondary transition-colors cursor-pointer" href="#">
+<span class="font-body-sm text-body-sm">Analítica</span>
+</a>
+<a class="text-secondary font-bold border-b-2 border-secondary pb-1 h-full flex items-center hover:text-secondary transition-colors cursor-pointer" href="#">
+<span class="font-body-sm text-body-sm">Reportes</span>
+</a>
+<a class="text-on-surface-variant h-full flex items-center hover:text-secondary transition-colors cursor-pointer" href="#">
+<span class="font-body-sm text-body-sm">Configuración</span>
+</a>
+</nav>
+<div class="flex items-center gap-sm">
+<button class="p-xs text-on-surface-variant hover:text-secondary transition-colors">
+<span class="material-symbols-outlined">search</span>
+</button>
+<button class="p-xs text-on-surface-variant hover:text-secondary transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="p-xs text-on-surface-variant hover:text-secondary transition-colors">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Page Content Scrollable -->
+<main class="flex-1 overflow-y-auto p-margin-desktop space-y-md">
+<!-- Page Header -->
+<div class="max-w-7xl mx-auto mb-lg">
+<h2 class="font-headline-lg text-headline-lg text-primary mb-xs">Centro de Reportes y Documentación Formal</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Generación de informes de cumplimiento normativo, hojas de vida de infraestructura y exportación de datos en bruto.</p>
+</div>
+<!-- Quick Reports Grid - Updated Roundness -->
+<div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-md mb-lg">
+<!-- Card 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-3xl p-md flex flex-col justify-between h-full shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] hover:shadow-lg cursor-pointer">
+<div>
+<div class="flex items-center justify-between mb-sm">
+<h3 class="font-headline-sm text-headline-sm text-primary">Informe RETIE</h3>
+<span class="material-symbols-outlined text-error" style="font-variation-settings: &quot;FILL&quot; 1;">gavel</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-md">Compilación formal en PDF con tablas de infracciones, desviaciones de varianza y formato membretado para entes de control.</p>
+</div>
+<button class="w-full py-base border border-secondary text-secondary rounded-xl font-bold flex items-center justify-center gap-xs hover:bg-secondary-fixed transition-colors active:scale-95">
+<span class="material-symbols-outlined text-[18px]">picture_as_pdf</span>
+<span class="font-label-caps text-label-caps">Exportar PDF</span>
+</button>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-3xl p-md flex flex-col justify-between h-full shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] hover:shadow-lg cursor-pointer">
+<div>
+<div class="flex items-center justify-between mb-sm">
+<h3 class="font-headline-sm text-headline-sm text-primary">Ficha Técnica</h3>
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: &quot;FILL&quot; 1;">engineering</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-md">Hoja de vida descargable de nodos específicos con historial de picos térmicos (Efecto Joule) para mantenimiento preventivo.</p>
+</div>
+<button class="w-full py-base border border-secondary text-secondary rounded-xl font-bold flex items-center justify-center gap-xs hover:bg-secondary-fixed transition-colors active:scale-95">
+<span class="material-symbols-outlined text-[18px]">assignment</span>
+<span class="font-label-caps text-label-caps">Generar Ficha</span>
+</button>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-3xl p-md flex flex-col justify-between h-full shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] hover:shadow-lg cursor-pointer">
+<div>
+<div class="flex items-center justify-between mb-sm">
+<h3 class="font-headline-sm text-headline-sm text-primary">Datos en Bruto</h3>
+<span class="material-symbols-outlined text-on-surface-variant" style="font-variation-settings: &quot;FILL&quot; 1;">database</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-md">Descarga de registros históricos de variables eléctricas (Varianza, Intensidad, Pérdida) en formatos tabulares.</p>
+</div>
+<button class="w-full py-base border border-secondary text-secondary rounded-xl font-bold flex items-center justify-center gap-xs hover:bg-secondary-fixed transition-colors active:scale-95">
+<span class="material-symbols-outlined text-[18px]">download</span>
+<span class="font-label-caps text-label-caps">Descargar CSV/XLSX</span>
+</button>
+</div>
+</div>
+<!-- Report Builder Card - Updated Roundness -->
+<div class="max-w-7xl mx-auto bg-surface-container-lowest border border-outline-variant rounded-3xl p-md shadow-sm mb-lg hover:scale-[1.02] transition-all duration-300 hover:shadow-lg cursor-default">
+<div class="mb-md">
+<h3 class="font-headline-md text-headline-md text-primary">Constructor de Reportes Personalizado</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+<!-- Column Left: Parameters -->
+<div class="space-y-md">
+<div class="space-y-xs">
+<label class="font-label-caps text-label-caps text-on-surface-variant">Selector de Zona / Sector</label>
+<select class="w-full bg-background border border-outline-variant rounded-xl p-base focus:ring-2 focus:ring-secondary focus:border-secondary outline-none font-body-md">
+<option>Sur de Barranquilla - Rebolo</option>
+<option>Sur de Barranquilla - La Chinita</option>
+<option>Sur de Barranquilla - El Ferry</option>
+</select>
+</div>
+<div class="space-y-xs">
+<label class="font-label-caps text-label-caps text-on-surface-variant">Nodos de Interés</label>
+<select class="w-full bg-background border border-outline-variant rounded-xl p-base focus:ring-2 focus:ring-secondary focus:border-secondary outline-none font-body-md">
+<option>Todos los Nodos</option>
+<option>Nodo ND-A1</option>
+<option>Nodo ND-B2</option>
+<option>Nodo ND-C3</option>
+</select>
+</div>
+<div class="space-y-xs">
+<label class="font-label-caps text-label-caps text-on-surface-variant">Rango de Fechas</label>
+<div class="flex gap-base">
+<button class="flex-1 py-base bg-secondary-fixed text-on-secondary-fixed-variant rounded-xl font-bold text-label-caps shadow-sm">Últimos 7 Días</button>
+<button class="flex-1 py-base bg-surface-container-high text-on-surface-variant rounded-xl font-bold text-label-caps">30 Días</button>
+<button class="flex-1 py-base bg-surface-container-high text-on-surface-variant rounded-xl font-bold text-label-caps">Mes Actual</button>
+</div>
+</div>
+</div>
+<!-- Column Right: Metrics & Output -->
+<div class="space-y-md">
+<div class="space-y-sm">
+<label class="font-label-caps text-label-caps text-on-surface-variant mb-xs block">Variables a Incluir</label>
+<div class="grid grid-cols-2 gap-sm">
+<label class="flex items-center gap-base cursor-pointer">
+<input checked="" class="rounded border-outline-variant text-secondary focus:ring-secondary" type="checkbox">
+<span class="font-body-md text-body-md">Pérdida Térmica</span>
+</label>
+<label class="flex items-center gap-base cursor-pointer">
+<input checked="" class="rounded border-outline-variant text-secondary focus:ring-secondary" type="checkbox">
+<span class="font-body-md text-body-md">Varianza Eléctrica</span>
+</label>
+<label class="flex items-center gap-base cursor-pointer">
+<input class="rounded border-outline-variant text-secondary focus:ring-secondary" type="checkbox">
+<span class="font-body-md text-body-md">Alertas RETIE</span>
+</label>
+<label class="flex items-center gap-base cursor-pointer">
+<input class="rounded border-outline-variant text-secondary focus:ring-secondary" type="checkbox">
+<span class="font-body-md text-body-md">Gráficos Analíticos</span>
+</label>
+</div>
+</div>
+<div class="space-y-xs">
+<label class="font-label-caps text-label-caps text-on-surface-variant">Formato de Salida</label>
+<div class="flex gap-base">
+<label class="flex-1 flex items-center gap-base p-base border border-outline-variant rounded-xl cursor-pointer hover:bg-surface-container-low transition-colors">
+<input checked="" class="text-secondary focus:ring-secondary" name="format" type="radio">
+<span class="font-body-md text-body-md">PDF (.pdf)</span>
+</label>
+<label class="flex-1 flex items-center gap-base p-base border border-outline-variant rounded-xl cursor-pointer hover:bg-surface-container-low transition-colors">
+<input class="text-secondary focus:ring-secondary" name="format" type="radio">
+<span class="font-body-md text-body-md">Excel (.xlsx)</span>
+</label>
+</div>
+</div>
+<button class="w-full mt-md py-md bg-primary-container text-on-primary rounded-xl font-bold flex items-center justify-center gap-base hover:opacity-90 active:scale-[0.98] transition-all shadow-md">
+<span class="material-symbols-outlined">summarize</span>
+<span class="font-body-md text-body-md">Generar y Descargar Reporte</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Automation Table - Updated to match SCREEN_11 style -->
+<div class="max-w-7xl mx-auto space-y-md">
+<div class="flex justify-between items-end">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary">Automatización y Envíos Programados</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Listado de reportes recurrentes enviados a gerencia y entes técnicos.</p>
+</div>
+<button class="px-md py-base bg-secondary text-on-secondary rounded-xl font-bold flex items-center gap-xs hover:bg-primary transition-colors shadow-sm">
+<span class="material-symbols-outlined">schedule_send</span>
+<span class="font-label-caps text-label-caps">Programar Nuevo Reporte</span>
+</button>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-3xl shadow-sm overflow-hidden">
+<div class="px-md py-sm border-b border-outline-variant flex justify-between items-center bg-surface-container-low/30">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">table_chart</span>
+<h3 class="font-headline-sm text-headline-sm font-semibold text-on-background">Log de Automatizaciones</h3>
+</div>
+<button class="text-secondary font-body-sm text-body-sm font-medium hover:underline flex items-center gap-xs transition-colors">
+                        Ver Historial Completo <span class="material-symbols-outlined" style="font-size: 16px;">open_in_new</span>
+</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-outline-variant text-on-surface-variant font-label-caps text-label-caps uppercase tracking-wider bg-surface-container-low/50">
+<th class="px-md py-sm font-bold">Nombre del Reporte</th>
+<th class="px-md py-sm font-bold">Frecuencia</th>
+<th class="px-md py-sm font-bold">Destinatario</th>
+<th class="px-md py-sm font-bold">Estado</th>
+<th class="px-md py-sm font-bold text-right">Acciones</th>
+</tr>
+</thead>
+<tbody class="font-body-sm text-body-sm divide-y divide-outline-variant/50">
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-md py-sm font-body-md font-medium text-on-background">Consumo Diario Rebolo</td>
+<td class="px-md py-sm font-data-mono text-data-mono text-on-background">Cada 24h (06:00)</td>
+<td class="px-md py-sm text-on-surface-variant">gerencia.operaciones@joulex.co</td>
+<td class="px-md py-sm">
+<span class="inline-flex items-center gap-xs px-2.5 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800 border border-green-200 shadow-sm">
+<span class="material-symbols-outlined" style="font-size: 14px;">check_circle</span>
+                                        Activo
+                                    </span>
+</td>
+<td class="px-md py-sm text-right space-x-base">
+<button class="text-secondary hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="text-error hover:text-on-error-container transition-colors"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors bg-surface-bright">
+<td class="px-md py-sm font-body-md font-medium text-on-background">Auditoría Semanal RETIE</td>
+<td class="px-md py-sm font-data-mono text-data-mono text-on-background">Lunes (08:00)</td>
+<td class="px-md py-sm text-on-surface-variant">compliance@supervisora.gov.co</td>
+<td class="px-md py-sm">
+<span class="inline-flex items-center gap-xs px-2.5 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800 border border-green-200 shadow-sm">
+<span class="material-symbols-outlined" style="font-size: 14px;">check_circle</span>
+                                        Activo
+                                    </span>
+</td>
+<td class="px-md py-sm text-right space-x-base">
+<button class="text-secondary hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="text-error hover:text-on-error-container transition-colors"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-md py-sm font-body-md font-medium text-on-background">Mantenimiento Preventivo Ferry</td>
+<td class="px-md py-sm font-data-mono text-data-mono text-on-background">Mensual (Día 1)</td>
+<td class="px-md py-sm text-on-surface-variant">mantenimiento@joulex.co</td>
+<td class="px-md py-sm">
+<span class="inline-flex items-center gap-xs px-2.5 py-1 rounded-full text-xs font-semibold bg-surface-variant text-on-surface-variant border border-outline-variant shadow-sm">
+<span class="material-symbols-outlined" style="font-size: 14px;">pause_circle</span>
+                                        Pausado
+                                    </span>
+</td>
+<td class="px-md py-sm text-right space-x-base">
+<button class="text-secondary hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="text-error hover:text-on-error-container transition-colors"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Bottom Illustration Section (Asymmetric / Modern) -->
+<div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-md items-center py-lg">
+<div class="md:col-span-4 bg-surface-container-highest rounded-3xl p-md border border-outline-variant shadow-sm">
+<h4 class="font-headline-sm text-headline-sm text-primary mb-sm">Infraestructura Crítica</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Monitoreo térmico constante sobre 1,240 nodos del sector sur. La generación de reportes automáticos reduce el riesgo de fallas catastróficas en un 40%.</p>
+</div>
+<div class="md:col-span-8 h-48 bg-surface-container rounded-3xl overflow-hidden relative border border-outline-variant shadow-sm">
+<img alt="Server Infrastructure" class="w-full h-full object-cover opacity-60" data-alt="A sophisticated data center server room with rows of high-tech server racks illuminated by soft blue and white LED lights. The visual style is professional and corporate, emphasizing data reliability and engineering precision. The perspective is from a low angle, showing the depth of the facility with clean, reflective floors and a sterile, modern atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAC4yodCgviSS-LusshvlpMa86Tpk2TYk5d6GB_hZnILGPL6gbM6w4RZQFxDwUvbJ3qNwHswqVf5UTcshRsrEDejd4XkWt1EC22Od1Hi9QmWU8Y7rXNIyoWebgbMx2820xevh_0GttUxSYlDb7EuBwAmUqqdDaoaV0LlqTYas6-0QpxzNOewSdPsk9GfHNMMCvEPoYyYMUWM4Zi7a255WugP-7ipCswCr-dnL-FYaf5aEdDB0ZIjAqXSlFERvgdFqiZdGp3c-QNuco">
+<div class="absolute inset-0 bg-gradient-to-r from-surface-container via-transparent to-transparent"></div>
+<div class="absolute inset-0 flex items-center pl-md">
+<div class="bg-primary/90 text-on-primary p-base rounded-xl backdrop-blur-sm border border-white/20 shadow-lg">
+<span class="font-label-caps text-label-caps block opacity-80 uppercase tracking-widest">Estado Global de Datos</span>
+<span class="font-headline-md text-headline-md block">99.98% Integridad</span>
+</div>
+</div>
+</div>
+</div>
+<footer class="max-w-7xl mx-auto pt-lg pb-md border-t border-outline-variant mt-lg">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-md mb-md">
+    <!-- Support Column -->
+    <div class="space-y-sm">
+      <h4 class="font-label-caps text-label-caps text-primary uppercase tracking-wider">Servicio al Cliente</h4>
+      <div class="flex flex-col gap-xs">
+        <a href="tel:+576051234567" class="flex items-center gap-xs text-on-surface-variant hover:text-secondary transition-colors font-body-sm text-body-sm">
+          <span class="material-symbols-outlined text-[18px]">phone</span>
+          +57 605 123 4567
+        </a>
+        <a href="mailto:soporte@joulex.co" class="flex items-center gap-xs text-on-surface-variant hover:text-secondary transition-colors font-body-sm text-body-sm">
+          <span class="material-symbols-outlined text-[18px]">mail</span>
+          soporte@joulex.co
+        </a>
+      </div>
+    </div>
+
+    <!-- Social Column -->
+    <div class="space-y-sm">
+      <h4 class="font-label-caps text-label-caps text-primary uppercase tracking-wider">Redes Sociales</h4>
+      <div class="flex gap-md">
+        <a href="#" class="flex items-center gap-xs text-on-surface-variant hover:text-secondary transition-colors font-body-sm text-body-sm">
+          <span class="material-symbols-outlined text-[18px]">link</span>
+          LinkedIn
+        </a>
+        <a href="#" class="flex items-center gap-xs text-on-surface-variant hover:text-secondary transition-colors font-body-sm text-body-sm">
+          <span class="material-symbols-outlined text-[18px]">close</span>
+          Twitter/X
+        </a>
+        <a href="#" class="flex items-center gap-xs text-on-surface-variant hover:text-secondary transition-colors font-body-sm text-body-sm">
+          <span class="material-symbols-outlined text-[18px]">photo_camera</span>
+          Instagram
+        </a>
+      </div>
+    </div>
+
+    <!-- Institutional Info -->
+    <div class="lg:text-right flex flex-col justify-end">
+      <p class="font-label-caps text-label-caps text-on-surface-variant">
+        Certificación RETIE 2023 | ISO 9001
+      </p>
+    </div>
+  </div>
+
+  <!-- Bottom Line -->
+  <div class="pt-md border-t border-outline-variant/30 flex flex-col md:flex-row justify-between gap-sm items-center">
+    <p class="font-body-sm text-body-sm text-on-surface-variant opacity-80">
+      © 2023 JouleX - MonitorEléctrico BQ. Todos los derechos reservados.
+    </p>
+    <div class="flex gap-md font-body-sm text-body-sm text-on-surface-variant">
+      <a href="#" class="hover:underline">Términos y Condiciones</a>
+      <a href="#" class="hover:underline">Política de Privacidad</a>
+    </div>
+  </div>
+</footer></main>
+</div>
+<!-- Floating Action Button - Consistency from SCREEN_11 -->
+<div class="fixed bottom-lg right-lg">
+<button class="w-14 h-14 bg-primary rounded-full shadow-lg text-on-primary flex items-center justify-center hover:scale-110 active:scale-95 transition-transform" title="Contactar Soporte Técnico">
+<span class="material-symbols-outlined text-[32px]">support_agent</span>
+</button>
+</div>
+
+
+
+
+
+
+</body></html>

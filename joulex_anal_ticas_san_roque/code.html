@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Analíticas de Infraestructura - San Roque | MonitorEléctrico BQ</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#001430",
+                        "on-secondary-fixed": "#001c3b",
+                        "on-secondary": "#ffffff",
+                        "surface-dim": "#d9dadb",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-surface": "#2e3132",
+                        "error": "#ba1a1a",
+                        "on-surface": "#191c1d",
+                        "on-primary-fixed": "#001b3d",
+                        "on-surface-variant": "#43474f",
+                        "on-primary-fixed-variant": "#284775",
+                        "on-tertiary-fixed": "#341100",
+                        "secondary": "#1c5fa8",
+                        "outline-variant": "#c4c6d0",
+                        "surface": "#f8f9fa",
+                        "on-secondary-container": "#00427d",
+                        "tertiary-container": "#491a00",
+                        "on-secondary-fixed-variant": "#004787",
+                        "surface-container-high": "#e7e8e9",
+                        "secondary-fixed": "#d5e3ff",
+                        "on-error": "#ffffff",
+                        "surface-container": "#edeeef",
+                        "on-tertiary-container": "#c77e59",
+                        "inverse-primary": "#aac7fd",
+                        "surface-variant": "#e1e3e4",
+                        "surface-tint": "#415f8f",
+                        "surface-container-highest": "#e1e3e4",
+                        "surface-bright": "#f8f9fa",
+                        "primary-fixed-dim": "#aac7fd",
+                        "tertiary": "#280b00",
+                        "secondary-container": "#79b0ff",
+                        "primary-container": "#002855",
+                        "on-tertiary-fixed-variant": "#703718",
+                        "inverse-on-surface": "#f0f1f2",
+                        "tertiary-fixed": "#ffdbcb",
+                        "on-primary-container": "#7490c3",
+                        "on-background": "#191c1d",
+                        "tertiary-fixed-dim": "#ffb692",
+                        "primary-fixed": "#d6e3ff",
+                        "outline": "#747780",
+                        "secondary-fixed-dim": "#a6c8ff",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-low": "#f3f4f5",
+                        "on-primary": "#ffffff",
+                        "background": "#f8f9fa",
+                        "on-error-container": "#93000a",
+                        "error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "lg": "48px",
+                        "sm": "12px",
+                        "margin-mobile": "16px",
+                        "base": "8px",
+                        "margin-desktop": "32px",
+                        "xs": "4px",
+                        "md": "24px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["Inter"],
+                        "data-mono": ["JetBrains Mono"],
+                        "headline-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "body-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "data-mono": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="bg-background text-on-surface flex h-screen overflow-hidden">
+<!-- SideNavBar Component -->
+<aside class="flex flex-col h-full p-base gap-xs overflow-y-auto bg-surface-container-low dark:bg-surface-container-highest h-screen w-64 border-r border-outline-variant dark:border-outline shrink-0">
+<div class="flex flex-col gap-xs mb-md px-base pt-sm">
+<div class="flex items-center gap-sm">
+<img alt="District Icon" class="w-10 h-10 rounded-lg bg-primary-container p-1" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsEXID7z6n86Zwa5uUOEo9MQsfOlDYKFKQVo5JUvlGzuu88G0wT4R_YtL81iOKl3Rwmn2HBHk2KajR8Xgog2fA7BiOmSGmiBanFGvZQJdrk62_vWt-x4jw1G7U6-7F96vVdSoCYALLc0M6YeqAiegPumNsiHeRdptD3gaOyzHGgQBuPsqupJdv47tZePKiPwT9I9m_Zdo0ITxjD5mzyX0xCd46i_GYv-gka6llmTFQeXDZ-lqU68_kVQdbYIaEzek4OP4XAQLS-14"/>
+<div>
+<h2 class="font-headline-sm text-headline-sm font-bold text-primary dark:text-primary-fixed">Sur de Barranquilla</h2>
+<p class="text-label-caps font-label-caps text-on-surface-variant opacity-70">Electrical Monitoring Sector</p>
+</div>
+</div>
+</div>
+<nav class="flex flex-col gap-xs flex-grow">
+<!-- Navigation Items Mapping -->
+<a class="flex items-center gap-base p-base text-on-surface-variant dark:text-outline-variant hover:bg-surface-variant dark:hover:bg-inverse-surface rounded-xl transition-all font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined">location_on</span>
+<span>Rebolo</span>
+</a>
+<a class="flex items-center gap-base p-base text-on-surface-variant dark:text-outline-variant hover:bg-surface-variant dark:hover:bg-inverse-surface rounded-xl transition-all font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined">location_on</span>
+<span>La Chinita</span>
+</a>
+<a class="flex items-center gap-base p-base text-on-surface-variant dark:text-outline-variant hover:bg-surface-variant dark:hover:bg-inverse-surface rounded-xl transition-all font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined">location_on</span>
+<span>El Ferry</span>
+</a>
+<a class="flex items-center gap-base p-base bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary rounded-xl font-bold transition-all font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined">location_on</span>
+<span>San Roque</span>
+</a>
+<a class="flex items-center gap-base p-base text-on-surface-variant dark:text-outline-variant hover:bg-surface-variant dark:hover:bg-inverse-surface rounded-xl transition-all font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined">location_on</span>
+<span>Simón Bolívar</span>
+</a>
+</nav>
+<div class="mt-auto flex flex-col gap-xs pt-md border-t border-outline-variant">
+<button class="bg-primary text-on-primary font-bold py-sm px-base rounded-xl active:scale-98 transition-all font-label-caps text-label-caps mb-sm">
+                Add New Zone
+            </button>
+<a class="flex items-center gap-base p-base text-on-surface-variant dark:text-outline-variant hover:bg-surface-variant dark:hover:bg-inverse-surface rounded-xl transition-all font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined">settings_suggest</span>
+<span>System Health</span>
+</a>
+<a class="flex items-center gap-base p-base text-on-surface-variant dark:text-outline-variant hover:bg-surface-variant dark:hover:bg-inverse-surface rounded-xl transition-all font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined">help_outline</span>
+<span>Support</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-grow flex flex-col overflow-hidden">
+<!-- TopNavBar Component -->
+<header class="flex justify-between items-center px-margin-desktop w-full h-16 bg-surface-container-lowest dark:bg-inverse-surface border-b border-outline-variant dark:border-outline z-10 shrink-0">
+<div class="flex items-center gap-lg">
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim">MonitorEléctrico BQ</h1>
+<nav class="hidden md:flex gap-md items-center h-full pt-1">
+<a class="text-on-surface-variant dark:text-outline-variant font-body-md text-body-md hover:text-secondary dark:hover:text-secondary-fixed-dim transition-colors cursor-pointer active:scale-95 transition-transform" href="#">Dashboard</a>
+<a class="text-secondary dark:text-secondary-fixed-dim font-bold border-b-2 border-secondary dark:border-secondary-fixed-dim pb-1 font-body-md text-body-md cursor-pointer active:scale-95 transition-transform" href="#">Analytics</a>
+<a class="text-on-surface-variant dark:text-outline-variant font-body-md text-body-md hover:text-secondary dark:hover:text-secondary-fixed-dim transition-colors cursor-pointer active:scale-95 transition-transform" href="#">Reports</a>
+<a class="text-on-surface-variant dark:text-outline-variant font-body-md text-body-md hover:text-secondary dark:hover:text-secondary-fixed-dim transition-colors cursor-pointer active:scale-95 transition-transform" href="#">Settings</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<div class="hidden lg:flex items-center bg-surface-container-high px-base py-xs rounded-full border border-outline-variant">
+<span class="material-symbols-outlined text-outline">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-sm font-body-sm w-48" placeholder="Search analytics..." type="text"/>
+</div>
+<div class="flex items-center gap-sm">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer transition-colors">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer transition-colors">account_circle</button>
+<img alt="IMAGE_1" class="w-8 h-8 rounded-full border border-outline-variant object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoRlgO9jjoTUsDEbuTAiMXDui0zcb2L7SOZEgCI4cL0adFFTH1OlxSSFk8MGxKPglbCLri__mqMkODASQ9WU0iU9htx5VIeePSRxCjPnsTdbB1IBibjCZPpSwIJgchM_mFYjBpBBhDjX5MQWlGRZOxFi5ObMaOTVJfw2IMujavbqW_voj76c80uWVG7lpXoUh0svqHZr1LCJAqY3vj10TU3J2aRtKcU7UpKJyZoMwCbr8bFJ3qEiUyOpNgJNP6GzNvOqE3zl0eIrg"/>
+</div>
+</div>
+</header>
+<!-- Scrollable Analytics Canvas -->
+<div class="flex-grow overflow-y-auto p-margin-desktop no-scrollbar">
+<div class="max-w-7xl mx-auto flex flex-col gap-md">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-base">
+<div>
+<nav class="flex gap-xs text-on-surface-variant text-label-caps font-label-caps mb-xs">
+<span class="hover:text-secondary cursor-pointer">Sectores</span>
+<span>/</span>
+<span class="hover:text-secondary cursor-pointer">Sur de Barranquilla</span>
+<span>/</span>
+<span class="text-primary">San Roque</span>
+</nav>
+<h2 class="font-headline-lg text-headline-lg text-primary">Analíticas de Infraestructura - San Roque</h2>
+</div>
+<div class="flex gap-sm">
+<button class="bg-surface border border-outline-variant px-md py-sm rounded text-body-sm font-body-sm flex items-center gap-xs hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+                            Últimas 24h
+                        </button>
+<button class="bg-primary text-on-primary px-md py-sm rounded text-body-sm font-bold flex items-center gap-xs shadow-sm hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                            Exportar Informe
+                        </button>
+</div>
+</div>
+<!-- Metrics Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-md">
+<!-- Metric Card 1: Thermal Yield -->
+<div class="bg-surface-container-lowest border border-outline-variant p-md rounded relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-full h-1 bg-secondary"></div>
+<div class="flex justify-between items-start mb-sm">
+<p class="text-label-caps font-label-caps text-on-surface-variant uppercase">Rendimiento Térmico</p>
+<span class="material-symbols-outlined text-secondary opacity-60">thermostat</span>
+</div>
+<div class="flex items-baseline gap-xs mb-xs">
+<span class="font-display-lg text-display-lg text-primary">94.2%</span>
+<span class="text-body-sm font-body-sm text-on-tertiary-container flex items-center bg-tertiary-fixed px-1 rounded">
+<span class="material-symbols-outlined text-[14px]">trending_up</span> 1.2%
+                            </span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Eficiencia promedio de transformadores</p>
+<div class="mt-md h-1 bg-surface-variant rounded-full overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 94.2%"></div>
+</div>
+</div>
+<!-- Metric Card 2: Network Efficiency -->
+<div class="bg-surface-container-lowest border border-outline-variant p-md rounded relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-1 bg-on-secondary-container"></div>
+<div class="flex justify-between items-start mb-sm">
+<p class="text-label-caps font-label-caps text-on-surface-variant uppercase">Eficiencia de Red</p>
+<span class="material-symbols-outlined text-on-secondary-container opacity-60">bolt</span>
+</div>
+<div class="flex items-baseline gap-xs mb-xs">
+<span class="font-display-lg text-display-lg text-primary">88.7%</span>
+<span class="text-body-sm font-body-sm text-error flex items-center bg-error-container px-1 rounded">
+<span class="material-symbols-outlined text-[14px]">trending_down</span> 0.5%
+                            </span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Pérdidas técnicas estimadas (S. Roque)</p>
+<div class="mt-md h-1 bg-surface-variant rounded-full overflow-hidden">
+<div class="bg-on-secondary-container h-full rounded-full" style="width: 88.7%"></div>
+</div>
+</div>
+<!-- Metric Card 3: RETIE Alerts -->
+<div class="bg-surface-container-lowest border border-outline-variant p-md rounded relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-1 bg-error"></div>
+<div class="flex justify-between items-start mb-sm">
+<p class="text-label-caps font-label-caps text-on-surface-variant uppercase">Alertas RETIE</p>
+<span class="material-symbols-outlined text-error opacity-60">warning</span>
+</div>
+<div class="flex items-baseline gap-xs mb-xs">
+<span class="font-display-lg text-display-lg text-primary">03</span>
+<span class="text-body-sm font-body-sm text-on-surface-variant bg-surface-container-high px-1 rounded">Críticas</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Incumplimientos de normativa técnica</p>
+<div class="mt-md flex gap-xs">
+<div class="h-2 w-full rounded bg-error"></div>
+<div class="h-2 w-full rounded bg-error"></div>
+<div class="h-2 w-full rounded bg-error"></div>
+<div class="h-2 w-full rounded bg-surface-variant opacity-30"></div>
+<div class="h-2 w-full rounded bg-surface-variant opacity-30"></div>
+</div>
+</div>
+</div>
+<!-- Load Pattern Visualization (Main Chart Section) -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded p-md">
+<div class="flex justify-between items-center mb-md">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary">Patrón de Carga Activa - San Roque</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Visualización en tiempo real de la demanda en el sector</p>
+</div>
+<div class="flex gap-base">
+<div class="flex items-center gap-xs">
+<span class="w-3 h-3 rounded-full bg-secondary"></span>
+<span class="text-label-caps font-label-caps text-on-surface-variant">Línea San Roque</span>
+</div>
+<div class="flex items-center gap-xs">
+<span class="w-3 h-3 rounded-full bg-outline"></span>
+<span class="text-label-caps font-label-caps text-on-surface-variant">Promedio Distrito</span>
+</div>
+</div>
+</div>
+<!-- Simplified Waveform SVG representing the new pattern -->
+<div class="relative w-full h-64 bg-surface-container-low border border-outline-variant/30 rounded flex items-center justify-center overflow-hidden">
+<svg class="absolute inset-0 w-full h-full" viewbox="0 0 1000 250">
+<!-- Background Grid Lines -->
+<line stroke="#DEE2E6" stroke-dasharray="4" x1="0" x2="1000" y1="50" y2="50"></line>
+<line stroke="#DEE2E6" stroke-dasharray="4" x1="0" x2="1000" y1="100" y2="100"></line>
+<line stroke="#DEE2E6" stroke-dasharray="4" x1="0" x2="1000" y1="150" y2="150"></line>
+<line stroke="#DEE2E6" stroke-dasharray="4" x1="0" x2="1000" y1="200" y2="200"></line>
+<!-- Average Line -->
+<path d="M0,120 Q100,110 200,125 T400,115 T600,130 T800,110 T1000,120" fill="none" stroke="#747780" stroke-dasharray="5" stroke-width="2"></path>
+<!-- Active Load Wave (San Roque) - Specific jagged pattern -->
+<path d="M0,180 L50,170 L100,190 L150,160 L200,155 L250,140 L300,175 L350,120 L400,110 L450,150 L500,145 L550,100 L600,60 L650,85 L700,90 L750,130 L800,160 L850,155 L900,185 L950,175 L1000,200" fill="none" stroke="#1c5fa8" stroke-linejoin="round" stroke-width="4"></path>
+</svg>
+<!-- Overlay Labels -->
+<div class="absolute left-4 bottom-4 flex flex-col gap-xs">
+<span class="text-data-mono font-data-mono text-[10px] bg-primary text-on-primary px-1 rounded">24.5 kVA peak</span>
+<span class="text-data-mono font-data-mono text-[10px] bg-secondary text-on-secondary px-1 rounded">Normal Frequency: 60.1Hz</span>
+</div>
+</div>
+</div>
+<!-- Critical Event Log -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded overflow-hidden">
+<div class="bg-primary px-md py-sm">
+<h3 class="font-label-caps text-label-caps text-on-primary uppercase tracking-wider">Log de Monitoreo de Eventos Críticos</h3>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-high border-b border-outline-variant">
+<th class="p-md font-label-caps text-label-caps text-on-surface-variant uppercase">Timestamp</th>
+<th class="p-md font-label-caps text-label-caps text-on-surface-variant uppercase">Nodo ID</th>
+<th class="p-md font-label-caps text-label-caps text-on-surface-variant uppercase">Tipo de Evento</th>
+<th class="p-md font-label-caps text-label-caps text-on-surface-variant uppercase">Severidad</th>
+<th class="p-md font-label-caps text-label-caps text-on-surface-variant uppercase">Status</th>
+<th class="p-md font-label-caps text-label-caps text-on-surface-variant uppercase">Acción</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant font-data-mono text-data-mono">
+<!-- Log Row 1 -->
+<tr class="bg-white hover:bg-surface-container transition-colors">
+<td class="p-md">2023-11-24 14:32:05</td>
+<td class="p-md">T-SR-0442</td>
+<td class="p-md">Sobrecalentamiento Fase B</td>
+<td class="p-md text-error">CRÍTICA</td>
+<td class="p-md">
+<span class="flex items-center gap-xs text-error">
+<span class="w-2 h-2 rounded-full bg-error"></span> Activo
+                                        </span>
+</td>
+<td class="p-md">
+<button class="text-secondary hover:underline">Ver Diagnóstico</button>
+</td>
+</tr>
+<!-- Log Row 2 -->
+<tr class="bg-surface-container-lowest hover:bg-surface-container transition-colors">
+<td class="p-md">2023-11-24 12:15:22</td>
+<td class="p-md">N-SR-771</td>
+<td class="p-md">Fluctuación Armónica (THD &gt; 15%)</td>
+<td class="p-md text-tertiary-container">ALTA</td>
+<td class="p-md">
+<span class="flex items-center gap-xs text-on-surface-variant">
+<span class="w-2 h-2 rounded-full bg-secondary"></span> En Revisión
+                                        </span>
+</td>
+<td class="p-md">
+<button class="text-secondary hover:underline">Aislar Nodo</button>
+</td>
+</tr>
+<!-- Log Row 3 -->
+<tr class="bg-white hover:bg-surface-container transition-colors">
+<td class="p-md">2023-11-24 10:05:40</td>
+<td class="p-md">T-SR-0120</td>
+<td class="p-md">Fuga de Aceite Dieléctrico</td>
+<td class="p-md text-on-secondary-container">MEDIA</td>
+<td class="p-md">
+<span class="flex items-center gap-xs text-on-surface-variant opacity-60">
+<span class="w-2 h-2 rounded-full bg-outline"></span> Resuelto
+                                        </span>
+</td>
+<td class="p-md">
+<button class="text-secondary hover:underline">Reporte</button>
+</td>
+</tr>
+<!-- Log Row 4 -->
+<tr class="bg-surface-container-lowest hover:bg-surface-container transition-colors">
+<td class="p-md">2023-11-24 08:44:11</td>
+<td class="p-md">M-SR-INFRA</td>
+<td class="p-md">Falla Aislamiento Primario</td>
+<td class="p-md text-error">CRÍTICA</td>
+<td class="p-md">
+<span class="flex items-center gap-xs text-error">
+<span class="w-2 h-2 rounded-full bg-error"></span> Activo
+                                        </span>
+</td>
+<td class="p-md">
+<button class="text-secondary hover:underline">Ver Diagnóstico</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Infrastructure Insight Cards -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-md">
+<!-- Maintenance Calendar Card -->
+<div class="bg-surface-container-lowest border border-outline-variant p-md rounded flex flex-col gap-sm">
+<div class="flex items-center gap-base">
+<span class="material-symbols-outlined text-primary">engineering</span>
+<h4 class="font-headline-sm text-headline-sm text-primary">Calendario de Mantenimiento</h4>
+</div>
+<div class="flex flex-col gap-base">
+<div class="flex justify-between items-center p-base bg-surface border border-outline-variant rounded">
+<div class="flex flex-col">
+<span class="text-body-sm font-bold text-primary">Nodo T-SR-0442</span>
+<span class="text-label-caps font-label-caps text-on-surface-variant">Revisión de Termografía</span>
+</div>
+<span class="bg-secondary-fixed text-on-secondary-fixed text-label-caps font-label-caps px-sm py-xs rounded">Mañana, 09:00</span>
+</div>
+<div class="flex justify-between items-center p-base bg-surface border border-outline-variant rounded">
+<div class="flex flex-col">
+<span class="text-body-sm font-bold text-primary">Cableado Subestación SR-01</span>
+<span class="text-label-caps font-label-caps text-on-surface-variant">Sustitución de Aisladores</span>
+</div>
+<span class="bg-surface-container-high text-on-surface-variant text-label-caps font-label-caps px-sm py-xs rounded">28 Nov, 14:00</span>
+</div>
+</div>
+</div>
+<!-- Sector Map Preview -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded overflow-hidden relative min-h-[200px]">
+<div class="absolute inset-0 bg-surface-container flex items-center justify-center">
+<!-- Image representing the industrial map of the sector -->
+<img alt="Infrastructure Map of San Roque Barranquilla" class="w-full h-full object-cover opacity-60" data-alt="A sophisticated overhead view of an electrical infrastructure map overlaying a grayscale city grid of San Roque, Barranquilla. Glowing lines represent the power grid with color-coded nodes indicating health status. The aesthetic is modern, professional, and data-driven with a clean light-mode interface and corporate blue accents. High-tech digital map visualization for electrical engineering monitoring." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMy7hAgAQUqn-_ZgZgXwuKgevwiLXUS76Va9Jn4WswqH1N4q5F3HQWSYe7d467WfxCkeJJnuwXBopXWgezxPPXIer1Dd4xIZrYMu5SThVUux-c68srTHu16pE1ffRb_b66qSNdyvuWTYUhNrm9aDm0vx6whnQT7O0PTHagVdsaTsH3sLOUYuzbKTFzPG5DdE9P8h_r5EJrbkIGJs9YVNpDgkGMpKl2yWcfvzSk83IeITO6xzGhd9lQez1PcgrRencsPo2JTvXn3j0"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent flex items-end p-md">
+<div class="text-on-primary">
+<h4 class="font-headline-sm text-headline-sm">Mapa de Nodos Críticos</h4>
+<p class="text-body-sm font-body-sm opacity-80">Localización geográfica de eventos reportados</p>
+</div>
+</div>
+<div class="absolute top-md right-md">
+<button class="bg-primary text-on-primary p-xs rounded-lg shadow-lg">
+<span class="material-symbols-outlined">zoom_in</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

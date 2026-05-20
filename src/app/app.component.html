@@ -1,0 +1,528 @@
+<p-toast></p-toast>
+
+<main *ngIf="!loggedIn" class="login-shell">
+  <section class="login-panel">
+    <div class="brand-mark">
+      <svg viewBox="0 0 100 100" aria-hidden="true">
+        <rect width="100" height="100" rx="15" fill="#002855" />
+        <path d="M30 50 L45 30 L55 50 L70 30" stroke="#00539C" stroke-width="8" fill="none" stroke-linecap="round" />
+        <path d="M30 70 L45 50 L55 70 L70 50" stroke="#00AEEF" stroke-width="8" fill="none" stroke-linecap="round" />
+        <circle cx="50" cy="50" r="5" fill="white" />
+      </svg>
+      <div>
+        <h1>JouleX</h1>
+        <span>MonitorElectrico BQ</span>
+      </div>
+    </div>
+
+    <h2>Centro de monitoreo electrico</h2>
+    <p>Analitica por barrios de Barranquilla para consumo, tension, perdidas y eventos criticos.</p>
+
+    <form [formGroup]="loginForm" (ngSubmit)="login()" class="login-form">
+      <label for="email">Correo</label>
+      <input id="email" pInputText formControlName="email" autocomplete="username" />
+
+      <label for="password">Contrasena</label>
+      <p-password
+        inputId="password"
+        formControlName="password"
+        [feedback]="false"
+        [toggleMask]="true"
+        styleClass="password-field">
+      </p-password>
+
+      <button pButton type="submit" label="Entrar al dashboard" icon="pi pi-sign-in" [loading]="loading"></button>
+      <small>Demo: demo&#64;joulex.co / demo123</small>
+    </form>
+  </section>
+
+  <section class="login-visual">
+    <div class="network-map">
+      <span class="node critical"></span>
+      <span class="node warning"></span>
+      <span class="node normal"></span>
+      <span class="line line-a"></span>
+      <span class="line line-b"></span>
+      <span class="line line-c"></span>
+      <div class="visual-copy">
+        <strong>Sur de Barranquilla</strong>
+        <span>Rebolo, La Chinita, San Roque, Simon Bolivar y zonas anexas</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div *ngIf="loggedIn" class="app-shell">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <svg viewBox="0 0 100 100" aria-hidden="true">
+        <rect width="100" height="100" rx="15" fill="#002855" />
+        <path d="M30 50 L45 30 L55 50 L70 30" stroke="#00539C" stroke-width="8" fill="none" stroke-linecap="round" />
+        <path d="M30 70 L45 50 L55 70 L70 50" stroke="#00AEEF" stroke-width="8" fill="none" stroke-linecap="round" />
+        <circle cx="50" cy="50" r="5" fill="white" />
+      </svg>
+      <div>
+        <strong>JouleX</strong>
+        <span>Monitoreo BQ</span>
+      </div>
+    </div>
+
+    <nav>
+      <button
+        *ngFor="let barrio of barrios"
+        type="button"
+        [class.active]="selectedBarrio?.barrio === barrio.barrio"
+        (click)="selectedBarrio = barrio">
+        <i class="pi pi-map-marker"></i>
+        <span>{{ barrio.barrio }}</span>
+        <b [class]="statusClass(barrio.estado)"></b>
+      </button>
+    </nav>
+  </aside>
+
+  <section class="workspace">
+    <header class="topbar">
+      <div>
+        <h1>Analitica de infraestructura electrica</h1>
+        <span>Datos simulados desde CSV local para demostracion tecnica.</span>
+      </div>
+      <div class="topbar-actions">
+        <div class="module-tabs">
+          <button type="button" [class.active]="activeModule === 'plataforma'" (click)="setModule('plataforma')">Plataforma</button>
+          <button type="button" [class.active]="activeModule === 'analitica'" (click)="setModule('analitica')">Analitica</button>
+          <button type="button" [class.active]="activeModule === 'reportes'" (click)="setModule('reportes')">Reportes</button>
+          <button type="button" [class.active]="activeModule === 'sistema'" (click)="setModule('sistema')">Sistema</button>
+        </div>
+        <p-dropdown
+          [options]="barrios"
+          [(ngModel)]="selectedBarrio"
+          optionLabel="barrio"
+          placeholder="Seleccionar barrio">
+        </p-dropdown>
+        <button pButton type="button" icon="pi pi-refresh" label="Actualizar" (click)="loadDashboard()" [loading]="loading"></button>
+        <button pButton type="button" icon="pi pi-sign-out" class="p-button-outlined" label="Salir" (click)="logout()"></button>
+      </div>
+    </header>
+
+    <ng-container *ngIf="activeModule === 'plataforma'">
+    <section class="hero-band" *ngIf="selectedBarrio">
+      <div>
+        <span>{{ selectedBarrio.sector }}</span>
+        <h2>{{ selectedBarrio.barrio }}</h2>
+        <p>Estado operativo {{ selectedBarrio.estado }} con {{ selectedBarrio.eventos_criticos }} eventos priorizados.</p>
+      </div>
+      <div class="hero-metrics">
+        <p-tag [value]="selectedBarrio.estado" [severity]="severityFor(selectedBarrio.estado)"></p-tag>
+        <strong>{{ selectedBarrio.usuarios | number }}</strong>
+        <small>usuarios monitoreados</small>
+      </div>
+    </section>
+
+    <section class="metric-grid" *ngIf="summary && selectedBarrio">
+      <p-card styleClass="metric-card">
+        <span>Consumo actual</span>
+        <strong>{{ selectedBarrio.consumo_kw | number: '1.1-1' }} kW</strong>
+        <small>{{ summary.consumoKw | number: '1.1-1' }} kW agregados</small>
+      </p-card>
+      <p-card styleClass="metric-card">
+        <span>Tension de red</span>
+        <strong>{{ selectedBarrio.tension_v | number: '1.1-1' }} V</strong>
+        <small>Promedio BQ: {{ summary.tensionPromedio | number: '1.1-1' }} V</small>
+      </p-card>
+      <p-card styleClass="metric-card">
+        <span>Factor de potencia</span>
+        <strong>{{ selectedBarrio.factor_potencia | number: '1.2-2' }}</strong>
+        <small>Referencia operativa >= 0.92</small>
+      </p-card>
+      <p-card styleClass="metric-card critical">
+        <span>Perdidas Joule</span>
+        <strong>{{ selectedBarrio.perdidas_kw | number: '1.1-1' }} kW</strong>
+        <small>{{ selectedBarrio.temperatura_c | number: '1.1-1' }} C en transformador</small>
+      </p-card>
+    </section>
+
+    <section class="content-grid">
+      <p-card styleClass="panel-card chart-card">
+        <ng-template pTemplate="header">
+          <div class="panel-header">
+            <div>
+              <strong>Consumo y perdidas por barrio</strong>
+              <span>Lectura comparativa de carga del CSV</span>
+            </div>
+            <i class="pi pi-chart-bar"></i>
+          </div>
+        </ng-template>
+        <p-chart type="bar" [data]="chartData" [options]="chartOptions"></p-chart>
+        <div class="chart-note">
+          <span><b class="blue"></b> Barras: consumo por barrio.</span>
+          <span><b class="red"></b> Linea: perdidas tecnicas estimadas.</span>
+        </div>
+      </p-card>
+
+      <p-card styleClass="panel-card field-card" *ngIf="selectedBarrio">
+        <ng-template pTemplate="header">
+          <div class="panel-header">
+            <div>
+              <strong>Vista de campo</strong>
+              <span>Coordenadas de referencia</span>
+            </div>
+            <i class="pi pi-compass"></i>
+          </div>
+        </ng-template>
+        <div class="field-map">
+          <span class="grid-line vertical"></span>
+          <span class="grid-line horizontal"></span>
+          <span class="substation"></span>
+          <span class="feeder feeder-a"></span>
+          <span class="feeder feeder-b"></span>
+          <div>
+            <strong>{{ selectedBarrio.lat }}, {{ selectedBarrio.lng }}</strong>
+            <small>{{ selectedBarrio.usuarios | number }} usuarios monitoreados</small>
+          </div>
+        </div>
+        <div class="status-donut">
+          <div>
+            <strong>Distribucion de estados</strong>
+            <span>Normal / Alerta / Critico</span>
+            <div class="mini-legend">
+              <em class="ok"></em> Normal
+              <em class="warn"></em> Alerta
+              <em class="danger"></em> Critico
+            </div>
+          </div>
+          <div class="donut-wrap">
+            <p-chart type="doughnut" [data]="statusChartData" [options]="doughnutOptions"></p-chart>
+          </div>
+        </div>
+      </p-card>
+    </section>
+
+    <p-card styleClass="panel-card table-card">
+      <ng-template pTemplate="header">
+        <div class="panel-header">
+          <div>
+            <strong>Registro de eventos criticos</strong>
+            <span>Priorizado por barrio, dispositivo y estado</span>
+          </div>
+          <i class="pi pi-list-check"></i>
+        </div>
+      </ng-template>
+
+      <p-table [value]="events" [paginator]="true" [rows]="6" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Timestamp</th>
+            <th>Barrio</th>
+            <th>Dispositivo</th>
+            <th>Evento</th>
+            <th>Valor</th>
+            <th>Estado</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-event>
+          <tr>
+            <td>{{ event.timestamp | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
+            <td>{{ event.barrio }}</td>
+            <td>{{ event.dispositivo }}</td>
+            <td>{{ event.evento }}</td>
+            <td class="mono">{{ event.valor }}</td>
+            <td>
+              <p-tag [value]="event.estado" [severity]="severityFor(event.estado)"></p-tag>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-card>
+    </ng-container>
+
+    <ng-container *ngIf="activeModule === 'analitica'">
+      <section class="module-heading">
+        <div>
+          <h2>Analiticas tecnicas de infraestructura</h2>
+          <p>Vista consolidada de calculos de efecto Joule, campo electrico, capacitancia y cumplimiento RETIE.</p>
+        </div>
+        <div class="range-switch">
+          <button>7D</button>
+          <button class="active">30D</button>
+          <button>12M</button>
+        </div>
+      </section>
+
+      <section class="metric-grid">
+        <p-card styleClass="metric-card">
+          <span>Rendimiento termico</span>
+          <strong>{{ (summary?.perdidasKw || 0) / (summary?.consumoKw || 1) | percent: '1.1-1' }}</strong>
+          <small>Relacion perdidas / carga agregada</small>
+        </p-card>
+        <p-card styleClass="metric-card">
+          <span>Eficiencia de red</span>
+          <strong>{{ 1 - ((summary?.perdidasKw || 0) / (summary?.consumoKw || 1)) | percent: '1.1-1' }}</strong>
+          <small>Base sobre telemetria simulada</small>
+        </p-card>
+        <p-card styleClass="metric-card critical">
+          <span>Alertas RETIE</span>
+          <strong>{{ summary?.eventosCriticos || 0 }}</strong>
+          <small>{{ summary?.barriosCriticos || 0 }} barrios en estado critico</small>
+        </p-card>
+        <p-card styleClass="metric-card">
+          <span>Sensores activos</span>
+          <strong>{{ systemHealth?.sensoresActivos || 0 }}</strong>
+          <small>Gateway de telemetria sur BQ</small>
+        </p-card>
+      </section>
+
+      <section class="content-grid">
+        <p-card styleClass="panel-card chart-card">
+          <ng-template pTemplate="header">
+            <div class="panel-header">
+              <div>
+                <strong>Perdida Joule vs reserva energetica</strong>
+                <span>P = I^2R y U = 1/2CV^2 por nodo</span>
+              </div>
+              <i class="pi pi-wave-pulse"></i>
+            </div>
+          </ng-template>
+          <p-chart type="bar" [data]="analyticChartData" [options]="analyticChartOptions"></p-chart>
+          <div class="chart-note">
+            <span><b class="blue"></b> Area: perdida Joule calculada.</span>
+            <span><b class="cyan"></b> Barras: energia disponible en capacitores.</span>
+          </div>
+        </p-card>
+
+        <p-card styleClass="panel-card">
+          <ng-template pTemplate="header">
+            <div class="panel-header">
+              <div>
+                <strong>Alertas por nodo</strong>
+                <span>Distribucion realista para demo RETIE</span>
+              </div>
+              <i class="pi pi-shield"></i>
+            </div>
+          </ng-template>
+          <div class="alert-stack" *ngFor="let node of nodes.slice(0, 5)">
+            <div>
+              <strong>{{ node.id }} - {{ node.barrio }}</strong>
+              <span>{{ node.retie }}</span>
+            </div>
+            <div class="stackbar">
+              <b class="danger" [style.width.%]="node.retie === 'INFRACCION' ? 35 : 8"></b>
+              <b class="warn" [style.width.%]="node.retie === 'OBSERVACION' ? 48 : 18"></b>
+              <b class="ok"></b>
+            </div>
+          </div>
+          <div class="legend-row">
+            <span><b class="danger"></b> Infraccion</span>
+            <span><b class="warn"></b> Observacion</span>
+            <span><b class="ok"></b> Cumple</span>
+          </div>
+        </p-card>
+      </section>
+
+      <p-card styleClass="panel-card table-card">
+        <ng-template pTemplate="header">
+          <div class="panel-header">
+            <div>
+              <strong>Resumen tecnico de calculos</strong>
+              <span>Variables fisicas, resultados y estado normativo</span>
+            </div>
+            <i class="pi pi-table"></i>
+          </div>
+        </ng-template>
+        <p-table [value]="nodes" [paginator]="true" [rows]="6" responsiveLayout="scroll">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Nodo</th>
+              <th>Barrio</th>
+              <th>Formula</th>
+              <th>I / R</th>
+              <th>Perdida</th>
+              <th>Campo</th>
+              <th>Reserva</th>
+              <th>RETIE</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-node>
+            <tr>
+              <td class="mono">{{ node.id }}</td>
+              <td>{{ node.barrio }}</td>
+              <td class="mono">{{ node.formula }}</td>
+              <td class="mono">{{ node.corriente_a }} A / {{ node.resistencia_ohm }} ohm</td>
+              <td class="mono">{{ node.perdida_w }} W</td>
+              <td class="mono">{{ node.campo_vm | number }} V/m</td>
+              <td class="mono">{{ node.energia_j }} J</td>
+              <td><p-tag [value]="node.retie" [severity]="retieSeverity(node.retie)"></p-tag></td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </p-card>
+    </ng-container>
+
+    <ng-container *ngIf="activeModule === 'reportes'">
+      <section class="module-heading">
+        <div>
+          <h2>Centro de reportes y documentacion formal</h2>
+          <p>Informes RETIE, fichas tecnicas, datos en bruto y programacion de envios.</p>
+        </div>
+      </section>
+
+      <section class="report-grid">
+        <p-card styleClass="report-card">
+          <i class="pi pi-file-pdf"></i>
+          <h3>Informe RETIE</h3>
+          <p>Compilacion formal con infracciones, varianza, eventos criticos y trazabilidad por barrio.</p>
+          <button pButton type="button" label="Exportar PDF" icon="pi pi-download" (click)="exportPdf('retie')"></button>
+        </p-card>
+        <p-card styleClass="report-card">
+          <i class="pi pi-wrench"></i>
+          <h3>Ficha tecnica</h3>
+          <p>Hoja de vida de nodos, transformadores, picos termicos y recomendaciones de mantenimiento.</p>
+          <button pButton type="button" label="Generar ficha" icon="pi pi-file-edit" class="p-button-outlined" (click)="exportPdf('ficha')"></button>
+        </p-card>
+        <p-card styleClass="report-card">
+          <i class="pi pi-database"></i>
+          <h3>Datos en bruto</h3>
+          <p>Descarga de lecturas CSV con consumo, tension, corriente, perdidas y eventos por sector.</p>
+          <button pButton type="button" label="Descargar CSV" icon="pi pi-table" class="p-button-outlined" (click)="downloadCsv()"></button>
+        </p-card>
+      </section>
+
+      <section class="report-preview">
+        <div>
+          <span>Vista previa del paquete de entrega</span>
+          <strong>{{ selectedBarrio?.barrio || 'Sector seleccionado' }} - {{ reportFormat }}</strong>
+          <p>{{ reportVariables.length }} variables incluidas, {{ events.length }} eventos auditables y {{ nodes.length }} nodos calculados.</p>
+        </div>
+        <div class="preview-bars">
+          <span style="--w: 92%"></span>
+          <span style="--w: 74%"></span>
+          <span style="--w: 58%"></span>
+        </div>
+      </section>
+
+      <p-card styleClass="panel-card builder-card">
+        <ng-template pTemplate="header">
+          <div class="panel-header">
+            <div>
+              <strong>Constructor de reportes personalizado</strong>
+              <span>Parametros listos para demostracion</span>
+            </div>
+            <i class="pi pi-cog"></i>
+          </div>
+        </ng-template>
+        <div class="builder-grid">
+          <label>
+            Zona / sector
+            <p-dropdown [options]="barrios" [(ngModel)]="selectedBarrio" optionLabel="barrio"></p-dropdown>
+          </label>
+          <label>
+            Rango
+            <div class="range-switch align-left">
+              <button>7 dias</button>
+              <button class="active">30 dias</button>
+              <button>Mes actual</button>
+            </div>
+          </label>
+          <label class="check-list">
+            Variables
+            <span><p-checkbox [(ngModel)]="reportVariables" value="Perdida termica"></p-checkbox> Perdida termica</span>
+            <span><p-checkbox [(ngModel)]="reportVariables" value="Varianza electrica"></p-checkbox> Varianza electrica</span>
+            <span><p-checkbox [(ngModel)]="reportVariables" value="Alertas RETIE"></p-checkbox> Alertas RETIE</span>
+          </label>
+          <label class="check-list">
+            Formato
+            <span><p-radioButton name="format" value="PDF" [(ngModel)]="reportFormat"></p-radioButton> PDF</span>
+            <span><p-radioButton name="format" value="XLSX" [(ngModel)]="reportFormat"></p-radioButton> Excel</span>
+          </label>
+        </div>
+      </p-card>
+
+      <p-card styleClass="panel-card table-card">
+        <ng-template pTemplate="header">
+          <div class="panel-header">
+            <div>
+              <strong>Automatizacion y envios programados</strong>
+              <span>Reportes recurrentes de operacion y cumplimiento</span>
+            </div>
+            <button pButton type="button" label="Programar" icon="pi pi-calendar-plus" (click)="scheduleReport()"></button>
+          </div>
+        </ng-template>
+        <p-table [value]="reports" responsiveLayout="scroll">
+          <ng-template pTemplate="header">
+            <tr><th>ID</th><th>Nombre</th><th>Frecuencia</th><th>Destinatario</th><th>Formato</th><th>Estado</th></tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-report>
+            <tr>
+              <td class="mono">{{ report.id }}</td>
+              <td>{{ report.nombre }}</td>
+              <td class="mono">{{ report.frecuencia }}</td>
+              <td>{{ report.destinatario }}</td>
+              <td>{{ report.formato }}</td>
+              <td><p-tag [value]="report.estado" [severity]="report.estado === 'ACTIVO' ? 'success' : 'secondary'"></p-tag></td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </p-card>
+    </ng-container>
+
+    <ng-container *ngIf="activeModule === 'sistema'">
+      <section class="module-heading">
+        <div>
+          <h2>Salud del sistema</h2>
+          <p>Estado operativo de ingestion, telemetria, eventos, reportes e integridad de datos.</p>
+        </div>
+      </section>
+
+      <section class="metric-grid" *ngIf="systemHealth">
+        <p-card styleClass="metric-card">
+          <span>Integridad de datos</span>
+          <strong>{{ systemHealth.integridadDatos }}%</strong>
+          <small>Validacion de registros CSV y eventos</small>
+        </p-card>
+        <p-card styleClass="metric-card">
+          <span>Latencia gateway</span>
+          <strong>{{ systemHealth.latenciaMs }} ms</strong>
+          <small>Promedio de telemetria simulada</small>
+        </p-card>
+        <p-card styleClass="metric-card">
+          <span>Paquetes procesados</span>
+          <strong>{{ systemHealth.paquetesProcesados | number }}</strong>
+          <small>Ventana operativa del dia</small>
+        </p-card>
+        <p-card styleClass="metric-card">
+          <span>Sensores activos</span>
+          <strong>{{ systemHealth.sensoresActivos }}</strong>
+          <small>Nodos y medidores virtuales</small>
+        </p-card>
+      </section>
+
+      <section class="service-grid" *ngIf="systemHealth">
+        <p-card *ngFor="let service of systemHealth.servicios" styleClass="service-card">
+          <div>
+            <i class="pi" [class.pi-check-circle]="service.estado === 'OPERATIVO'" [class.pi-exclamation-triangle]="service.estado === 'DEGRADADO'"></i>
+            <strong>{{ service.nombre }}</strong>
+          </div>
+          <p>{{ service.detalle }}</p>
+          <p-tag [value]="service.estado" [severity]="service.estado === 'OPERATIVO' ? 'success' : 'warn'"></p-tag>
+        </p-card>
+      </section>
+
+      <section class="ops-panel" *ngIf="systemHealth">
+        <div class="ops-row">
+          <span>Integridad</span>
+          <b><i [style.width.%]="systemHealth.integridadDatos"></i></b>
+          <strong>{{ systemHealth.integridadDatos }}%</strong>
+        </div>
+        <div class="ops-row">
+          <span>Latencia</span>
+          <b><i [style.width.%]="healthPercent(systemHealth.latenciaMs, 160)"></i></b>
+          <strong>{{ systemHealth.latenciaMs }} ms</strong>
+        </div>
+        <div class="ops-row">
+          <span>Sensores</span>
+          <b><i [style.width.%]="healthPercent(systemHealth.sensoresActivos, 150)"></i></b>
+          <strong>{{ systemHealth.sensoresActivos }}/150</strong>
+        </div>
+      </section>
+    </ng-container>
+  </section>
+</div>

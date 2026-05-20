@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.angular/
+*.log
+npm-debug.log*
+backend.log
+frontend.log
+.env
+.DS_Store

@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary": "#001430",
+                    "on-secondary-fixed": "#001c3b",
+                    "on-secondary": "#ffffff",
+                    "surface-dim": "#d9dadb",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-surface": "#2e3132",
+                    "error": "#ba1a1a",
+                    "on-surface": "#191c1d",
+                    "on-primary-fixed": "#001b3d",
+                    "on-surface-variant": "#43474f",
+                    "on-primary-fixed-variant": "#284775",
+                    "on-tertiary-fixed": "#341100",
+                    "secondary": "#1c5fa8",
+                    "outline-variant": "#c4c6d0",
+                    "surface": "#f8f9fa",
+                    "on-secondary-container": "#00427d",
+                    "tertiary-container": "#491a00",
+                    "on-secondary-fixed-variant": "#004787",
+                    "surface-container-high": "#e7e8e9",
+                    "secondary-fixed": "#d5e3ff",
+                    "on-error": "#ffffff",
+                    "surface-container": "#edeeef",
+                    "on-tertiary-container": "#c77e59",
+                    "inverse-primary": "#aac7fd",
+                    "surface-variant": "#e1e3e4",
+                    "surface-tint": "#415f8f",
+                    "surface-container-highest": "#e1e3e4",
+                    "surface-bright": "#f8f9fa",
+                    "primary-fixed-dim": "#aac7fd",
+                    "tertiary": "#280b00",
+                    "secondary-container": "#79b0ff",
+                    "primary-container": "#002855",
+                    "on-tertiary-fixed-variant": "#703718",
+                    "inverse-on-surface": "#f0f1f2",
+                    "tertiary-fixed": "#ffdbcb",
+                    "on-primary-container": "#7490c3",
+                    "on-background": "#191c1d",
+                    "tertiary-fixed-dim": "#ffb692",
+                    "primary-fixed": "#d6e3ff",
+                    "outline": "#747780",
+                    "secondary-fixed-dim": "#a6c8ff",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-low": "#f3f4f5",
+                    "on-primary": "#ffffff",
+                    "background": "#f8f9fa",
+                    "on-error-container": "#93000a",
+                    "error-container": "#ffdad6"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "lg": "48px",
+                    "sm": "12px",
+                    "margin-mobile": "16px",
+                    "base": "8px",
+                    "margin-desktop": "32px",
+                    "xs": "4px",
+                    "md": "24px",
+                    "gutter": "16px"
+            },
+            "fontFamily": {
+                    "label-caps": ["Inter"],
+                    "data-mono": ["JetBrains Mono"],
+                    "headline-sm": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "body-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "body-sm": ["Inter"]
+            },
+            "fontSize": {
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "data-mono": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        body {
+            background-color: #f8f9fa;
+            color: #191c1d;
+        }
+        .zebra-table tr:nth-child(even) {
+            background-color: #f3f4f5;
+        }
+    </style>
+</head>
+<body class="flex min-h-screen">
+<!-- SideNavBar Component -->
+<aside class="flex flex-col h-screen w-64 border-r border-outline-variant dark:border-outline bg-surface-container-low dark:bg-surface-container-highest shrink-0 overflow-y-auto">
+<div class="flex flex-col h-full p-base gap-xs">
+<div class="px-sm py-md">
+<div class="flex items-center gap-sm mb-xs">
+<div class="w-10 h-10 rounded bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined" data-icon="electric_bolt">electric_bolt</span>
+</div>
+<span class="font-headline-sm text-headline-sm font-bold text-primary">MonitorEléctrico BQ</span>
+</div>
+<div class="mt-md px-xs">
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase">Sur de Barranquilla</p>
+<p class="font-body-sm text-body-sm text-outline">Electrical Monitoring Sector</p>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-sm px-sm py-3 text-on-surface-variant dark:text-outline-variant hover:bg-surface-variant dark:hover:bg-inverse-surface rounded-xl transition-all cursor-pointer" href="#">
+<span class="material-symbols-outlined" data-icon="location_on">location_on</span>
+<span class="font-label-caps text-label-caps">Rebolo</span>
+</a>
+<!-- Active State: La Chinita -->
+<a class="flex items-center gap-sm px-sm py-3 bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary rounded-xl font-bold transition-all cursor-pointer" href="#">
+<span class="material-symbols-outlined" data-icon="location_on" style="font-variation-settings: 'FILL' 1;">location_on</span>
+<span class="font-label-caps text-label-caps">La Chinita</span>
+</a>
+<a class="flex items-center gap-sm px-sm py-3 text-on-surface-variant dark:text-outline-variant hover:bg-surface-variant dark:hover:bg-inverse-surface rounded-xl transition-all cursor-pointer" href="#">
+<span class="material-symbols-outlined" data-icon="location_on">location_on</span>
+<span class="font-label-caps text-label-caps">El Ferry</span>
+</a>
+<a class="flex items-center gap-sm px-sm py-3 text-on-surface-variant dark:text-outline-variant hover:bg-surface-variant dark:hover:bg-inverse-surface rounded-xl transition-all cursor-pointer" href="#">
+<span class="material-symbols-outlined" data-icon="location_on">location_on</span>
+<span class="font-label-caps text-label-caps">San Roque</span>
+</a>
+<a class="flex items-center gap-sm px-sm py-3 text-on-surface-variant dark:text-outline-variant hover:bg-surface-variant dark:hover:bg-inverse-surface rounded-xl transition-all cursor-pointer" href="#">
+<span class="material-symbols-outlined" data-icon="location_on">location_on</span>
+<span class="font-label-caps text-label-caps">Simón Bolívar</span>
+</a>
+</nav>
+<button class="mt-md mx-sm bg-primary text-on-primary py-sm px-md rounded-lg font-label-caps text-label-caps flex items-center justify-center gap-xs hover:opacity-90 active:scale-98 transition-all">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+                Add New Zone
+            </button>
+<div class="mt-auto border-t border-outline-variant pt-base">
+<a class="flex items-center gap-sm px-sm py-3 text-on-surface-variant hover:bg-surface-variant rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="settings_suggest">settings_suggest</span>
+<span class="font-label-caps text-label-caps">System Health</span>
+</a>
+<a class="flex items-center gap-sm px-sm py-3 text-on-surface-variant hover:bg-surface-variant rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+<span class="font-label-caps text-label-caps">Support</span>
+</a>
+</div>
+</div>
+</aside>
+<div class="flex-1 flex flex-col min-w-0">
+<!-- TopNavBar Component -->
+<header class="flex justify-between items-center px-margin-desktop w-full h-16 bg-surface-container-lowest dark:bg-inverse-surface border-b border-outline-variant dark:border-outline shrink-0">
+<div class="flex items-center gap-lg">
+<nav class="hidden md:flex gap-md items-center">
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-outline-variant hover:text-secondary transition-colors active:scale-95" href="#">Dashboard</a>
+<a class="font-label-caps text-label-caps text-secondary dark:text-secondary-fixed-dim font-bold border-b-2 border-secondary dark:border-secondary-fixed-dim pb-1" href="#">Analytics</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-outline-variant hover:text-secondary transition-colors active:scale-95" href="#">Reports</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-outline-variant hover:text-secondary transition-colors active:scale-95" href="#">Settings</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<div class="relative hidden sm:block">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-outline material-symbols-outlined" data-icon="search">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container rounded-lg border border-outline-variant focus:outline-none focus:border-secondary font-body-sm text-body-sm w-64" placeholder="Search data points..." type="text"/>
+</div>
+<div class="flex items-center gap-sm">
+<button class="p-2 text-on-surface-variant hover:bg-surface-variant rounded-full transition-colors relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<div class="h-8 w-px bg-outline-variant mx-1"></div>
+<button class="flex items-center gap-xs p-1 hover:bg-surface-variant rounded-full transition-colors">
+<img alt="IMAGE_1" class="w-8 h-8 rounded-full border border-outline-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaYSNvM1fsIkBy3GkT0nc3o2JHpPDcDWyUAyG6zsERU-4CPDa4C3hWFrxi4h5_HlckRfa4C222A418vvkPDrhHlxgS45gLrdnVMFmOJSMDr2qgK-3-np7VUak__Odd13kGbzh7QLEerNrFXWS0MxEj_XNojjHLsNdO2NAUwbJ2e7lhm_-B1K-_BTlI7rHrhXPKBCNrcaDLmtMabLozAoUvvvPY9ui80uPKSCs7H2m2W7VCUAT97xK6Na7k6yEtFPpAomwIfixVlZc"/>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 overflow-y-auto p-margin-desktop bg-surface">
+<!-- Header Section -->
+<div class="flex justify-between items-end mb-md">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-primary tracking-tight">La Chinita | Datos del Sector</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-xs">Real-time electrical distribution metrics and laboratory-grade analysis.</p>
+</div>
+<div class="flex gap-sm">
+<button class="px-md py-sm border border-outline text-on-surface font-label-caps text-label-caps rounded flex items-center gap-xs hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined" data-icon="download">download</span>
+                        Export PDF
+                    </button>
+<button class="px-md py-sm bg-primary text-on-primary font-label-caps text-label-caps rounded flex items-center gap-xs hover:opacity-90 shadow-sm transition-all active:scale-98">
+<span class="material-symbols-outlined" data-icon="refresh">refresh</span>
+                        Recalculate
+                    </button>
+</div>
+</div>
+<!-- Metric Cards (Bento Style Grid) -->
+<div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-md mb-md">
+<!-- Joule Consumption Card -->
+<div class="bg-white border border-outline-variant p-md rounded-lg relative overflow-hidden flex flex-col justify-between min-h-[160px]">
+<div class="absolute top-0 left-0 w-full h-1 bg-secondary"></div>
+<div class="flex justify-between items-start">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Current Draw (Joule)</span>
+<span class="material-symbols-outlined text-secondary" data-icon="bolt">bolt</span>
+</div>
+<div>
+<div class="font-display-lg text-display-lg text-primary">31.5 <span class="text-headline-sm">kW/h</span></div>
+<div class="flex items-center gap-xs text-secondary mt-xs">
+<span class="material-symbols-outlined text-sm" data-icon="trending_up">trending_up</span>
+<span class="font-data-mono text-data-mono">+2.4% vs previous hr</span>
+</div>
+</div>
+</div>
+<!-- Field Intensity Card -->
+<div class="bg-white border border-outline-variant p-md rounded-lg relative overflow-hidden flex flex-col justify-between min-h-[160px]">
+<div class="absolute top-0 left-0 w-full h-1 bg-secondary"></div>
+<div class="flex justify-between items-start">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Field Intensity</span>
+<span class="material-symbols-outlined text-secondary" data-icon="rss_feed">rss_feed</span>
+</div>
+<div>
+<div class="font-display-lg text-display-lg text-primary">0.9 <span class="text-headline-sm">kV/m</span></div>
+<div class="flex items-center gap-xs text-on-surface-variant mt-xs">
+<span class="material-symbols-outlined text-sm" data-icon="stable">video_stable</span>
+<span class="font-data-mono text-data-mono">Optimal Range</span>
+</div>
+</div>
+</div>
+<!-- Reserve Status Card -->
+<div class="bg-white border border-outline-variant p-md rounded-lg relative overflow-hidden flex flex-col justify-between min-h-[160px]">
+<div class="absolute top-0 left-0 w-full h-1 bg-[#198754]"></div>
+<div class="flex justify-between items-start">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Capacity Reserve</span>
+<span class="material-symbols-outlined text-[#198754]" data-icon="battery_full">battery_full</span>
+</div>
+<div>
+<div class="font-display-lg text-display-lg text-primary">92%</div>
+<div class="flex items-center gap-xs text-[#198754] mt-xs">
+<span class="material-symbols-outlined text-sm" data-icon="check_circle">check_circle</span>
+<span class="font-data-mono text-data-mono">High Availability</span>
+</div>
+</div>
+</div>
+<!-- Alert Summary (Asymmetric Item) -->
+<div class="bg-primary-container p-md rounded-lg flex flex-col justify-between min-h-[160px] text-white">
+<div class="flex justify-between items-start">
+<span class="font-label-caps text-label-caps text-on-primary-container uppercase">System Status</span>
+<span class="material-symbols-outlined text-on-primary-container" data-icon="shield">shield</span>
+</div>
+<div class="space-y-base">
+<div class="flex items-center justify-between font-label-caps text-label-caps">
+<span>Nodes Online:</span>
+<span class="font-data-mono">42/42</span>
+</div>
+<div class="w-full bg-primary h-1.5 rounded-full overflow-hidden">
+<div class="bg-secondary-container h-full w-full"></div>
+</div>
+<p class="font-body-sm text-body-sm text-on-primary-container italic">No active faults reported in La Chinita sector.</p>
+</div>
+</div>
+</div>
+<!-- Detailed Analysis Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-md">
+<!-- Data Visualization Placeholder -->
+<div class="lg:col-span-2 bg-white border border-outline-variant rounded-lg overflow-hidden flex flex-col">
+<div class="p-md border-b border-outline-variant flex justify-between items-center">
+<h3 class="font-headline-sm text-headline-sm text-primary">Energy Distribution Over Time</h3>
+<div class="flex gap-xs">
+<button class="px-3 py-1 bg-surface-container rounded font-label-caps text-label-caps text-primary">Live</button>
+<button class="px-3 py-1 text-on-surface-variant font-label-caps text-label-caps hover:bg-surface-container rounded">24h</button>
+<button class="px-3 py-1 text-on-surface-variant font-label-caps text-label-caps hover:bg-surface-container rounded">7d</button>
+</div>
+</div>
+<div class="flex-1 bg-[#F1F3F5] min-h-[300px] flex items-center justify-center p-md relative">
+<div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#002855 1px, transparent 1px); background-size: 20px 20px;"></div>
+<div class="w-full h-full flex items-end gap-xs px-md">
+<!-- Simulated Chart Bars -->
+<div class="flex-1 bg-secondary opacity-30 h-[40%] rounded-t-sm"></div>
+<div class="flex-1 bg-secondary opacity-40 h-[55%] rounded-t-sm"></div>
+<div class="flex-1 bg-secondary opacity-50 h-[65%] rounded-t-sm"></div>
+<div class="flex-1 bg-secondary opacity-60 h-[85%] rounded-t-sm"></div>
+<div class="flex-1 bg-secondary opacity-70 h-[75%] rounded-t-sm"></div>
+<div class="flex-1 bg-secondary opacity-80 h-[90%] rounded-t-sm"></div>
+<div class="flex-1 bg-secondary opacity-90 h-[95%] rounded-t-sm"></div>
+<div class="flex-1 bg-secondary h-[80%] rounded-t-sm"></div>
+<div class="flex-1 bg-secondary opacity-80 h-[60%] rounded-t-sm"></div>
+<div class="flex-1 bg-secondary opacity-60 h-[45%] rounded-t-sm"></div>
+</div>
+<div class="absolute bottom-4 left-0 w-full text-center">
+<span class="font-body-sm text-body-sm text-outline">Interactive Graph Loading: Processing 1.2M packets/sec</span>
+</div>
+</div>
+</div>
+<!-- Calculation Summary Table -->
+<div class="bg-white border border-outline-variant rounded-lg overflow-hidden flex flex-col">
+<div class="p-md border-b border-outline-variant bg-primary-container">
+<h3 class="font-headline-sm text-headline-sm text-white">Calculation Summary</h3>
+</div>
+<div class="flex-1 overflow-x-auto">
+<table class="w-full text-left border-collapse zebra-table">
+<thead>
+<tr class="bg-primary text-white border-b border-outline">
+<th class="p-base font-label-caps text-label-caps uppercase">Variable</th>
+<th class="p-base font-label-caps text-label-caps uppercase">Value</th>
+<th class="p-base font-label-caps text-label-caps uppercase">Trend</th>
+</tr>
+</thead>
+<tbody class="font-data-mono text-data-mono text-primary">
+<tr>
+<td class="p-base border-b border-outline-variant">Active Load</td>
+<td class="p-base border-b border-outline-variant">14.2 MW</td>
+<td class="p-base border-b border-outline-variant text-[#198754]">Stable</td>
+</tr>
+<tr>
+<td class="p-base border-b border-outline-variant">Reactive Loss</td>
+<td class="p-base border-b border-outline-variant">0.8 MVAR</td>
+<td class="p-base border-b border-outline-variant text-error">Rising</td>
+</tr>
+<tr>
+<td class="p-base border-b border-outline-variant">Peak Demand</td>
+<td class="p-base border-b border-outline-variant">32.1 kW/h</td>
+<td class="p-base border-b border-outline-variant text-[#198754]">Controlled</td>
+</tr>
+<tr>
+<td class="p-base border-b border-outline-variant">Node Latency</td>
+<td class="p-base border-b border-outline-variant">12 ms</td>
+<td class="p-base border-b border-outline-variant text-[#198754]">Optimal</td>
+</tr>
+<tr>
+<td class="p-base border-b border-outline-variant">Voltage Fluct.</td>
+<td class="p-base border-b border-outline-variant">±0.02%</td>
+<td class="p-base border-b border-outline-variant text-secondary">Nominal</td>
+</tr>
+<tr>
+<td class="p-base">Safety Buffer</td>
+<td class="p-base">15.5%</td>
+<td class="p-base text-[#198754]">Secure</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-base bg-surface-container-low border-t border-outline-variant">
+<button class="w-full py-2 text-secondary font-label-caps text-label-caps flex items-center justify-center gap-xs hover:bg-white transition-all">
+                            View Full Report <span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Bottom Asymmetric Layout for Map/Context -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-md mt-md">
+<div class="md:col-span-3 bg-white border border-outline-variant rounded-lg h-64 overflow-hidden relative">
+<img class="w-full h-full object-cover grayscale opacity-50" data-alt="A sophisticated satellite-style map of the La Chinita district in Barranquilla, featuring detailed electrical grid overlays in neon blue and gold. The visualization highlights transformer nodes and distribution lines against a dark, high-contrast urban background. The aesthetic is strictly professional and technical, resembling a mission control geographic interface." data-location="Barranquilla" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB30rQPSnZB4p7e9GP6NYVJDiXrxkf7qeGT0DRMfuH1CAxFqJXJELiIPkcIpOQMvaNl7deFfimhW2cXPc35YjxndrnDfxAWVZCPRlG70sq8C-v2AOc53dEFgDXnPepUAWmi6_kDxb3sKuEZKNE4PU5mR2B39Kptj9kSZmMLcisS_7qmvbjKMrXpkuZYpiIHxbkx8LjGNriy4-q1ZBnLfSabOaypJY2N3RmJXfCcDd0sAlkoAQmrMabqeTi9jyDL5j0X1XZztPsozEQ"/>
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+<div class="bg-primary/90 text-white px-md py-sm rounded-lg backdrop-blur-sm border border-secondary flex items-center gap-md">
+<span class="material-symbols-outlined text-secondary" data-icon="satellite">satellite</span>
+<div>
+<p class="font-label-caps text-label-caps">Geographic Grid Overlay Active</p>
+<p class="font-body-sm text-body-sm text-on-primary-container">District: La Chinita | Sector 04-B</p>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-white border border-outline-variant rounded-lg p-md flex flex-col gap-sm">
+<h4 class="font-label-caps text-label-caps text-primary border-b border-outline-variant pb-xs">Quick Diagnostics</h4>
+<div class="space-y-sm">
+<div class="flex items-center gap-sm">
+<div class="w-2 h-2 rounded-full bg-[#198754]"></div>
+<span class="font-body-sm text-body-sm flex-1">Transformer T-901</span>
+<span class="font-data-mono text-xs">OK</span>
+</div>
+<div class="flex items-center gap-sm">
+<div class="w-2 h-2 rounded-full bg-[#198754]"></div>
+<span class="font-body-sm text-body-sm flex-1">Primary Feed A</span>
+<span class="font-data-mono text-xs">OK</span>
+</div>
+<div class="flex items-center gap-sm">
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+<span class="font-body-sm text-body-sm flex-1">Backup Gen-4</span>
+<span class="font-data-mono text-xs text-secondary">Idle</span>
+</div>
+<div class="flex items-center gap-sm">
+<div class="w-2 h-2 rounded-full bg-error"></div>
+<span class="font-body-sm text-body-sm flex-1">Sensor Node #114</span>
+<span class="font-data-mono text-xs text-error">Check</span>
+</div>
+</div>
+<button class="mt-auto py-2 bg-surface-container text-primary rounded font-label-caps text-label-caps border border-outline-variant hover:border-outline">Configure Alerts</button>
+</div>
+</div>
+</main>
+</div>
+</body></html>

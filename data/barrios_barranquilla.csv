@@ -1,0 +1,11 @@
+barrio,sector,usuarios,consumo_kw,tension_v,corriente_a,factor_potencia,temperatura_c,perdidas_kw,eventos_criticos,estado,lat,lng
+Rebolo,Suroriente,1284,512.8,113.6,4498,0.91,67.4,31.2,2,ALERTA,10.9704,-74.7828
+La Chinita,Suroriente,978,463.5,111.9,4141,0.87,73.2,38.7,4,CRITICO,10.9563,-74.7728
+El Ferry,Suroriente,742,338.9,116.8,2901,0.95,58.6,18.1,1,NORMAL,10.9469,-74.7795
+San Roque,Centro Sur,1118,489.4,114.4,4278,0.9,69.8,29.5,2,ALERTA,10.9782,-74.7853
+Simon Bolivar,Sur,1352,428.5,114.2,3751,0.89,74.5,33.6,3,CRITICO,10.9464,-74.7932
+Chiquinquira,Centro,865,302.6,118.1,2562,0.96,54.9,14.9,0,NORMAL,10.9822,-74.7906
+Las Nieves,Suroriente,1044,394.7,115.8,3408,0.93,62.3,22.8,1,NORMAL,10.9666,-74.7757
+La Luz,Suroriente,1195,447.2,112.7,3968,0.88,71.6,35.3,3,ALERTA,10.9627,-74.7821
+Montes,Sur,1012,371.5,117.3,3167,0.94,60.2,19.7,1,NORMAL,10.9649,-74.7937
+Barrio Abajo,Norte Centro Historico,924,286.2,119.2,2401,0.97,52.4,12.2,0,NORMAL,10.9919,-74.7931

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>JouleX Minimalist Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#d9dadb",
+                        "on-secondary-container": "#00427d",
+                        "surface-variant": "#e1e3e4",
+                        "background": "#f8f9fa",
+                        "inverse-on-surface": "#f0f1f2",
+                        "on-background": "#191c1d",
+                        "primary-container": "#002855",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary": "#280b00",
+                        "inverse-primary": "#aac7fd",
+                        "on-secondary-fixed-variant": "#004787",
+                        "on-primary-fixed-variant": "#284775",
+                        "on-primary-container": "#7490c3",
+                        "on-primary-fixed": "#001b3d",
+                        "primary-fixed-dim": "#aac7fd",
+                        "secondary": "#1c5fa8",
+                        "tertiary-container": "#491a00",
+                        "outline": "#747780",
+                        "on-tertiary-fixed-variant": "#703718",
+                        "error-container": "#ffdad6",
+                        "surface-container-high": "#e7e8e9",
+                        "secondary-fixed": "#d5e3ff",
+                        "on-error": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "surface": "#f8f9fa",
+                        "secondary-container": "#79b0ff",
+                        "tertiary-fixed-dim": "#ffb692",
+                        "primary": "#001430",
+                        "on-secondary": "#ffffff",
+                        "surface-tint": "#415f8f",
+                        "surface-container-low": "#f3f4f5",
+                        "secondary-fixed-dim": "#a6c8ff",
+                        "on-primary": "#ffffff",
+                        "surface-bright": "#f8f9fa",
+                        "outline-variant": "#c4c6d0",
+                        "on-tertiary-fixed": "#341100",
+                        "on-tertiary-container": "#c77e59",
+                        "on-tertiary": "#ffffff",
+                        "inverse-surface": "#2e3132",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed": "#001c3b",
+                        "surface-container-highest": "#e1e3e4",
+                        "surface-container": "#edeeef",
+                        "on-surface-variant": "#43474f",
+                        "tertiary-fixed": "#ffdbcb",
+                        "primary-fixed": "#d6e3ff",
+                        "on-surface": "#191c1d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "sm": "12px",
+                        "xs": "4px",
+                        "gutter": "16px",
+                        "md": "24px",
+                        "margin-mobile": "16px",
+                        "lg": "48px",
+                        "base": "8px",
+                        "margin-desktop": "32px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "data-mono": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "data-mono": ["14px", { "lineHeight": "20px", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col md:flex-row overflow-x-hidden">
+<!-- SideNavBar (Mobile: Hidden, Desktop: Left side) -->
+<aside class="hidden md:flex flex-col h-screen w-64 border-r border-outline-variant bg-surface-container-low shrink-0 z-20 sticky top-0">
+<div class="p-base flex flex-col h-full gap-xs overflow-y-auto">
+<!-- Header -->
+<div class="px-gutter py-md mb-xs flex items-center gap-sm">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-secondary-container" data-icon="explore">explore</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm font-bold text-primary truncate">Sur de Barranquilla</h2>
+<p class="font-label-caps text-label-caps text-on-surface-variant truncate">Electrical Monitoring Sector</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex-1 flex flex-col gap-xs px-xs">
+<a class="flex items-center gap-sm px-sm py-sm rounded-xl font-bold bg-secondary-container text-on-secondary-container group" href="#">
+<span class="material-symbols-outlined" data-icon="location_on">location_on</span>
+<span class="font-body-sm text-body-sm">Rebolo</span>
+</a>
+<a class="flex items-center gap-sm px-sm py-sm rounded-xl text-on-surface-variant hover:bg-surface-variant transition-all group" href="#">
+<span class="material-symbols-outlined" data-icon="location_on">location_on</span>
+<span class="font-body-sm text-body-sm">La Chinita</span>
+</a>
+<a class="flex items-center gap-sm px-sm py-sm rounded-xl text-on-surface-variant hover:bg-surface-variant transition-all group" href="#">
+<span class="material-symbols-outlined" data-icon="location_on">location_on</span>
+<span class="font-body-sm text-body-sm">El Ferry</span>
+</a>
+<a class="flex items-center gap-sm px-sm py-sm rounded-xl text-on-surface-variant hover:bg-surface-variant transition-all group" href="#">
+<span class="material-symbols-outlined" data-icon="location_on">location_on</span>
+<span class="font-body-sm text-body-sm">San Roque</span>
+</a>
+<a class="flex items-center gap-sm px-sm py-sm rounded-xl text-on-surface-variant hover:bg-surface-variant transition-all group" href="#">
+<span class="material-symbols-outlined" data-icon="location_on">location_on</span>
+<span class="font-body-sm text-body-sm">Simón Bolívar</span>
+</a>
+</nav>
+<!-- CTA -->
+<div class="px-sm py-md">
+<button class="w-full py-sm px-gutter bg-transparent border border-outline text-primary font-body-sm text-body-sm rounded hover:bg-surface-variant transition-colors flex items-center justify-center gap-xs">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+                    Add New Zone
+                </button>
+</div>
+<!-- Footer Links -->
+<div class="mt-auto flex flex-col gap-xs px-xs pb-sm border-t border-outline-variant pt-sm">
+<a class="flex items-center gap-sm px-sm py-xs rounded-xl text-on-surface-variant hover:bg-surface-variant transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="settings_suggest">settings_suggest</span>
+<span class="font-body-sm text-body-sm">System Health</span>
+</a>
+<a class="flex items-center gap-sm px-sm py-xs rounded-xl text-on-surface-variant hover:bg-surface-variant transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+<span class="font-body-sm text-body-sm">Support</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden bg-background">
+<!-- TopNavBar -->
+<header class="bg-surface-container-lowest flex justify-between items-center px-margin-desktop w-full h-16 border-b border-outline-variant shrink-0 z-10 sticky top-0">
+<div class="flex items-center gap-sm">
+<img alt="MonitorEléctrico BQ Logo" class="h-8 w-8 object-contain" src="https://lh3.googleusercontent.com/aida/ADBb0uhfMhzNHUqlqv6qyWpTi1_zZcmW4bz1GW-WRGgOcz2RyhFq3-YcWhEObyBW7colTZ8kIRpb90j9zsUkY1tMqQVt3izvFlqAO0V7XWNeV0CXlRhKP_qAHrTgLWa-y_fxzz4IOe5TcLCOtkPQO6-T_mgDM5vl32T-VKeXqGkKQQxA2_WnO5-9B9IcGYqDIrz6If2KF9g1v4z0XDfsQNi7bAtxdiR8y94J_O1d_GH-kXIX3idNNj5HJDK2Qxw"/>
+<h1 class="font-headline-md text-headline-md font-bold text-primary hidden sm:block">MonitorEléctrico BQ</h1>
+</div>
+<!-- Desktop Nav Links -->
+<nav class="hidden lg:flex items-center gap-md h-full">
+<a class="text-secondary font-bold border-b-2 border-secondary pb-1 h-full flex items-center hover:text-secondary transition-colors cursor-pointer active:scale-95 transition-transform" href="#">
+<span class="font-body-sm text-body-sm">Dashboard</span>
+</a>
+<a class="text-on-surface-variant h-full flex items-center hover:text-secondary transition-colors cursor-pointer active:scale-95 transition-transform" href="#">
+<span class="font-body-sm text-body-sm">Analytics</span>
+</a>
+<a class="text-on-surface-variant h-full flex items-center hover:text-secondary transition-colors cursor-pointer active:scale-95 transition-transform" href="#">
+<span class="font-body-sm text-body-sm">Reports</span>
+</a>
+<a class="text-on-surface-variant h-full flex items-center hover:text-secondary transition-colors cursor-pointer active:scale-95 transition-transform" href="#">
+<span class="font-body-sm text-body-sm">Settings</span>
+</a>
+</nav>
+<div class="flex items-center gap-sm">
+<!-- Search Icon (Mobile/Desktop logic simplified for minimalism) -->
+<button class="p-xs text-on-surface-variant hover:text-secondary transition-colors cursor-pointer">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+<button class="p-xs text-on-surface-variant hover:text-secondary transition-colors cursor-pointer relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="p-xs text-on-surface-variant hover:text-secondary transition-colors cursor-pointer">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Scrollable Content Area -->
+<div class="flex-1 overflow-y-auto p-margin-mobile md:p-margin-desktop">
+<div class="max-w-7xl mx-auto space-y-md md:space-y-lg">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-sm mb-lg">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-background"><div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-secondary animate-pulse" style="font-size: 32px">monitoring</span>
+<span>Rebolo <span class="font-body-lg text-body-lg text-outline ml-xs font-normal">Sector Data</span></span>
+</div></h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-xs">Real-time metrics and historical analysis for designated zone.</p>
+</div>
+<div class="flex items-center gap-sm text-on-surface-variant font-data-mono text-data-mono">
+<span class="material-symbols-outlined text-secondary" data-icon="sync">sync</span>
+<span>Last updated: Just now</span>
+</div>
+</div>
+<!-- Bento Grid for Metrics -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter md:gap-md">
+<!-- Metric Card 1: Joule Effect -->
+<div class="bg-surface-container-lowest rounded-xl p-md border border-outline-variant flex flex-col justify-between hover:border-secondary transition-colors rounded-3xl shadow-sm hover:shadow-md hover:scale-[1.02] hover:border-secondary transition-all duration-300">
+<div class="flex justify-between items-start mb-md">
+<div>
+<h3 class="font-label-caps text-label-caps text-on-surface-variant tracking-wider uppercase">Joule Effect</h3>
+<p class="font-body-sm text-body-sm text-outline mt-1">Thermal Loss Eq.</p>
+</div>
+<span class="material-symbols-outlined text-outline" data-icon="thermostat">thermostat</span>
+</div>
+<div>
+<div class="flex items-baseline gap-xs">
+<span class="font-display-lg text-display-lg text-on-background">24.5</span>
+<span class="font-data-mono text-data-mono text-outline">kW/h</span>
+</div>
+<div class="mt-sm flex items-center gap-xs">
+<div class="h-1 flex-1 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-3/4"></div>
+</div>
+<span class="font-data-mono text-data-mono text-secondary text-xs">75%</span>
+</div>
+</div>
+</div>
+<!-- Metric Card 2: Electric Field -->
+<div class="bg-white rounded-2xl border border-outline-variant shadow-sm overflow-hidden">
+<div class="px-md py-sm border-b border-outline-variant flex justify-between items-center bg-surface-container-low/30">
+<h3 class="font-headline-sm text-headline-sm font-semibold text-on-background">Node Diagnostics</h3>
+<button class="text-secondary font-body-sm text-body-sm font-medium hover:underline">View All</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-outline-variant text-on-surface-variant font-label-caps text-label-caps uppercase tracking-wider bg-surface-container-low/50">
+<th class="px-md py-sm font-bold">Node ID</th>
+<th class="px-md py-sm font-bold">Location</th>
+<th class="px-md py-sm font-bold">Status</th>
+<th class="px-md py-sm font-bold text-right">Variance (Δ)</th>
+</tr>
+</thead>
+<tbody class="font-body-sm text-body-sm divide-y divide-outline-variant/50">
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-md py-sm font-data-mono text-data-mono text-on-background">ND-A1</td>
+<td class="px-md py-sm text-on-surface-variant">Substation Alpha</td>
+<td class="px-md py-sm">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200">Safe</span>
+</td>
+<td class="px-md py-sm text-right font-data-mono text-data-mono text-on-background">+0.02</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors bg-surface-bright">
+<td class="px-md py-sm font-data-mono text-data-mono text-on-background">ND-B2</td>
+<td class="px-md py-sm text-on-surface-variant">Distribution Point B</td>
+<td class="px-md py-sm">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800 border border-amber-200">Warning</span>
+</td>
+<td class="px-md py-sm text-right font-data-mono text-data-mono text-on-background">-0.05</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-md py-sm font-data-mono text-data-mono text-on-background">ND-C3</td>
+<td class="px-md py-sm text-on-surface-variant">Transformer Bank C</td>
+<td class="px-md py-sm">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 border border-red-200">RETIE Infraction</span>
+</td>
+<td class="px-md py-sm text-right font-data-mono text-data-mono text-error font-semibold">+1.45</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Metric Card 3: Energy Reserve -->
+<div class="bg-surface-container-lowest rounded-xl p-md border border-outline-variant flex flex-col justify-between hover:border-secondary transition-colors rounded-3xl shadow-sm hover:shadow-md hover:scale-[1.02] hover:border-secondary transition-all duration-300">
+<div class="flex justify-between items-start mb-md">
+<div>
+<h3 class="font-label-caps text-label-caps text-on-surface-variant tracking-wider uppercase">Energy Reserve</h3>
+<p class="font-body-sm text-body-sm text-outline mt-1">Capacitor Bank Status</p>
+</div>
+<span class="material-symbols-outlined text-outline" data-icon="battery_charging_full">battery_charging_full</span>
+</div>
+<div>
+<div class="flex items-baseline gap-xs">
+<span class="font-display-lg text-display-lg text-on-background">98</span>
+<span class="font-data-mono text-data-mono text-outline">%</span>
+</div>
+<div class="mt-sm flex items-center gap-xs">
+<div class="h-1 flex-1 bg-surface-variant rounded-full overflow-hidden flex">
+<div class="h-full bg-secondary w-full"></div>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Optimal</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Minimal Technical Summary Table -->
+<div class="bg-white rounded-2xl border border-outline-variant shadow-sm overflow-hidden">
+<div class="px-md py-sm border-b border-outline-variant flex justify-between items-center bg-surface-container-low/30">
+<h3 class="font-headline-sm text-headline-sm font-semibold text-on-background">Node Diagnostics</h3>
+<button class="text-secondary font-body-sm text-body-sm font-medium hover:underline">View All</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-outline-variant text-on-surface-variant font-label-caps text-label-caps uppercase tracking-wider bg-surface-container-low/50">
+<th class="px-md py-sm font-bold">Node ID</th>
+<th class="px-md py-sm font-bold">Location</th>
+<th class="px-md py-sm font-bold">Status</th>
+<th class="px-md py-sm font-bold text-right">Variance (Δ)</th>
+</tr>
+</thead>
+<tbody class="font-body-sm text-body-sm divide-y divide-outline-variant/50">
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-md py-sm font-data-mono text-data-mono text-on-background">ND-A1</td>
+<td class="px-md py-sm text-on-surface-variant">Substation Alpha</td>
+<td class="px-md py-sm">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200">Safe</span>
+</td>
+<td class="px-md py-sm text-right font-data-mono text-data-mono text-on-background">+0.02</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors bg-surface-bright">
+<td class="px-md py-sm font-data-mono text-data-mono text-on-background">ND-B2</td>
+<td class="px-md py-sm text-on-surface-variant">Distribution Point B</td>
+<td class="px-md py-sm">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800 border border-amber-200">Warning</span>
+</td>
+<td class="px-md py-sm text-right font-data-mono text-data-mono text-on-background">-0.05</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-md py-sm font-data-mono text-data-mono text-on-background">ND-C3</td>
+<td class="px-md py-sm text-on-surface-variant">Transformer Bank C</td>
+<td class="px-md py-sm">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 border border-red-200">RETIE Infraction</span>
+</td>
+<td class="px-md py-sm text-right font-data-mono text-data-mono text-error font-semibold">+1.45</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>
